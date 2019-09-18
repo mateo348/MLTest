@@ -1,9 +1,13 @@
 package com.example.test.view.itemDetails;
 
 import android.app.Application;
+import android.os.AsyncTask;
 
 import androidx.annotation.NonNull;
+import androidx.databinding.Bindable;
 import androidx.lifecycle.AndroidViewModel;
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 
@@ -22,19 +26,21 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class ItemDetailsViewModel extends AndroidViewModel {
+public class ItemDetailsViewModel extends ViewModel {
 
     @Inject
     IItemService itemService;
 
-    Item selectedItem;
+    MutableLiveData<Item> selectedItem = new MutableLiveData<>();
 
-    public ItemDetailsViewModel(Application application) {
-        super(application);
+    public ItemDetailsViewModel(Application application, String selectedItemId) {
         ((BaseApplication)application).getAppComponent().inject(this);
+        setSelectedItem(selectedItemId);
+
+
     }
 
-    public Item getSelectedItem() {
+    public LiveData<Item> getSelectedItem() {
         return selectedItem;
     }
 
@@ -43,7 +49,7 @@ public class ItemDetailsViewModel extends AndroidViewModel {
         Callback callbackResult = new Callback<Item>() {
             @Override
             public void onResponse(Call<Item> call, Response<Item> response) {
-                selectedItem = response.body();
+                selectedItem.setValue(response.body());
             }
 
             @Override
@@ -56,15 +62,15 @@ public class ItemDetailsViewModel extends AndroidViewModel {
     }
 
     public String getItemTitle(){
-        if (selectedItem != null)
-            return selectedItem.getTitle();
+        if (selectedItem.getValue() != null)
+            return selectedItem.getValue().getTitle();
         else
             return "";
     }
 
     public String getItemPrice(){
-        if (selectedItem != null)
-            return Currency.getInstance(Locale.getDefault()).getSymbol() +  selectedItem.getPrice();
+        if (selectedItem.getValue() != null)
+            return Currency.getInstance(Locale.getDefault()).getSymbol() +  Double.valueOf(getSelectedItem().getValue().getPrice());
         else
             return "";
     }
@@ -75,6 +81,7 @@ public class ItemDetailsViewModel extends AndroidViewModel {
         else
             return "";
     }
+
 
 
 }

@@ -42,13 +42,13 @@
                         android:id="@+id/tvTitle"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@{viewModel.getItemTitle()}"/>
+                        android:text="@{viewModel.getItemTitle(), default=default_value}"/>
 
                     <TextView
                         android:id="@+id/tvPrice"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@{viewModel.getItemPrice()}"/>
+                        android:text="@{viewModel.getItemPrice(),default=default_value}"/>
 
                     <TextView
                         android:id="@+id/tvDescription"

@@ -2,11 +2,13 @@ package com.example.test.view.itemDetails;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.viewpager.widget.ViewPager;
 
 import com.example.test.R;
 import com.example.test.databinding.ActivityItemDetailsBinding;
+import com.example.test.model.Item;
 
 import android.os.Bundle;
 import android.widget.TextView;
@@ -17,30 +19,25 @@ public class ItemDetailsActivity extends AppCompatActivity {
     //ViewPager vpPictures;
     TextView tvTitle, tvPrice, tvDescription;
     ItemDetailsViewModel viewModel;
+    ActivityItemDetailsBinding binding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_item_details);
 
-        viewModel= ViewModelProviders.of(this).get(ItemDetailsViewModel.class);
-        ActivityItemDetailsBinding binding = DataBindingUtil.setContentView(this, R.layout.activity_item_details);
-        binding.setViewModel(viewModel);
+        viewModel= ViewModelProviders.of(this, new ItemDetailsViewModelFactory(this.getApplication(), getIntent().getExtras().getString("SelectedItem"))).get(ItemDetailsViewModel.class);
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_item_details);
         binding.setLifecycleOwner(this);
 
+        viewModel.getSelectedItem().observe(this, new Observer<Item>() {
+            @Override
+            public void onChanged(Item item) {
+                binding.setViewModel(viewModel);
+            }
+        });
+
         //vpPictures = findViewById(R.id.vpPictures);
-        tvTitle = findViewById(R.id.tvTitle);
-        tvPrice = findViewById(R.id.tvPrice);
-        tvDescription = findViewById(R.id.tvDescription);
-
-        if (savedInstanceState != null) {
-            selectedItemID = savedInstanceState.getString("SelectedItem");
-            setSelectedItem(selectedItemID);
-        }
     }
 
-    private void setSelectedItem(String id){
-
-    }
 
 }
