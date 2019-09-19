@@ -8,12 +8,22 @@ import androidx.viewpager.widget.ViewPager;
 
 import com.example.test.R;
 import com.example.test.databinding.ActivityItemDetailsBinding;
+import com.example.test.di.BaseApplication;
+import com.example.test.di.DaggerItemDetailsComponent;
+import com.example.test.di.DaggerItemsListComponent;
+import com.example.test.di.ItemDetailsComponent;
+import com.example.test.di.ItemDetailsModule;
+import com.example.test.di.ItemsListComponent;
 import com.example.test.model.Item;
 
 import android.os.Bundle;
 
+import javax.inject.Inject;
+
 public class ItemDetailsActivity extends AppCompatActivity {
 
+    @Inject
+    ItemDetailsViewModelFactory viewModelFactory;
     ViewPager vpPictures;
     ItemDetailsViewModel viewModel;
     ActivityItemDetailsBinding binding;
@@ -23,7 +33,15 @@ public class ItemDetailsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        viewModel= ViewModelProviders.of(this, new ItemDetailsViewModelFactory(this.getApplication(), getIntent().getExtras().getString("SelectedItem"))).get(ItemDetailsViewModel.class);
+        String selectedItemId = getIntent().getExtras().getString("SelectedItem");
+
+        ItemDetailsComponent component = DaggerItemDetailsComponent.builder()
+                                            .appComponent(BaseApplication.getAppComponent())
+                                            .itemDetailsModule(new ItemDetailsModule(selectedItemId))
+                                            .build();
+        component.inject(this);
+
+        viewModel= ViewModelProviders.of(this, viewModelFactory).get(ItemDetailsViewModel.class);
         binding = DataBindingUtil.setContentView(this, R.layout.activity_item_details);
         binding.setLifecycleOwner(this);
         binding.setViewModel(viewModel);
@@ -39,8 +57,6 @@ public class ItemDetailsActivity extends AppCompatActivity {
         vpPictures = findViewById(R.id.vpPictures);
         imagesAdapter = new ItemDetailImagesAdapter(this);
         vpPictures.setAdapter(imagesAdapter);
-
-
     }
 
 

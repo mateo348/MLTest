@@ -6,26 +6,19 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.TextView;
-import com.example.test.R;
-
 import androidx.annotation.NonNull;
 import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.RecyclerView;
-
+import com.example.test.R;
 import com.example.test.databinding.SearchItemBinding;
-import com.example.test.model.Item;
 import com.example.test.model.Result;
 import com.example.test.util.DiffUtilCallback;
 import com.example.test.view.itemDetails.ItemDetailsActivity;
-import com.example.test.view.itemDetails.ItemDetailsViewModel;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
-import java.util.Currency;
 import java.util.List;
-import java.util.Locale;
 
 public class ItemListAdapter extends RecyclerView.Adapter<ItemListAdapter.ResultViewHolder> {
 

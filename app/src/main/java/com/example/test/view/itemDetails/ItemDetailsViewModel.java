@@ -1,36 +1,25 @@
 package com.example.test.view.itemDetails;
 
-import android.app.Application;
-
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
-
-import com.example.test.di.BaseApplication;
 import com.example.test.model.Item;
 import com.example.test.service.IItemService;
-
 import java.util.Currency;
 import java.util.Locale;
-
-import javax.inject.Inject;
-
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
 public class ItemDetailsViewModel extends ViewModel {
 
-    @Inject
     IItemService itemService;
 
     MutableLiveData<Item> selectedItem = new MutableLiveData<>();
 
-    public ItemDetailsViewModel(Application application, String selectedItemId) {
-        ((BaseApplication)application).getAppComponent().inject(this);
+    public ItemDetailsViewModel(IItemService itemService, String selectedItemId) {
+        this.itemService = itemService;
         setSelectedItem(selectedItemId);
-
-
     }
 
     public LiveData<Item> getSelectedItem() {

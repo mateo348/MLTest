@@ -4,20 +4,15 @@ import android.app.Application;
 
 public class BaseApplication extends Application {
 
-    private AppComponent appComponent;
+    private static AppComponent appComponent;
 
     @Override
     public void onCreate() {
         super.onCreate();
-        appComponent = DaggerAppComponent
-                .builder()
-                .application(this)
-                .build();
-
-
+        appComponent = DaggerAppComponent.builder().build();
     }
 
-    public AppComponent getAppComponent(){
+    public static AppComponent getAppComponent(){
         return appComponent;
     }
 }

@@ -1,27 +1,34 @@
-package com.example.test.di;
+package com.example.test;
 
+import android.app.Application;
 
 import com.example.test.apiconnection.ApiService;
+import com.example.test.service.IItemService;
+import com.example.test.service.ItemService;
+
+import org.mockito.Mockito;
+
 import javax.inject.Singleton;
+
 import dagger.Module;
 import dagger.Provides;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 @Module
-public class RetrofitModule {
+public class ApplicationModuleTest {
 
     private static final String BASE_URL = "https://api.mercadolibre.com/";
 
     @Singleton
     @Provides
-    GsonConverterFactory provideGsonConverterFactory(){
+    public GsonConverterFactory provideGsonConverterFactory(){
         return GsonConverterFactory.create();
     }
 
     @Singleton
     @Provides
-    Retrofit provideRetrofit(GsonConverterFactory gsonConverterFactory){
+    public Retrofit provideRetrofit(GsonConverterFactory gsonConverterFactory){
         return new Retrofit.Builder()
                 .baseUrl(BASE_URL)
                 .addConverterFactory(gsonConverterFactory.create())
@@ -30,7 +37,13 @@ public class RetrofitModule {
 
     @Singleton
     @Provides
-    ApiService provideApiClient(Retrofit retrofit){
+    public ApiService provideApiClient(Retrofit retrofit){
         return retrofit.create(ApiService.class);
+    }
+
+    @Singleton
+    @Provides
+    IItemService provideIItemService(ApiService apiService){
+        return Mockito.mock(ItemService.class);
     }
 }
