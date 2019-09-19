@@ -12,7 +12,7 @@ import retrofit2.http.Query;
 public interface ApiService {
 
     @GET("items/{id}")
-    Call<Item> getItem(@Path("id") String id);
+    Call<Item> getItem(@Path("id") String id, @Query("attributes") String attributes);
 
     @GET("sites/MLA/search")
     Call<Search> getSearch(@Query("q") String query);

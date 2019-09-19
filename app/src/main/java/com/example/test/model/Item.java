@@ -5,42 +5,34 @@ import com.google.gson.annotations.SerializedName;
 import java.util.List;
 
 public class Item {
-    @SerializedName("id")
-    private String id;
-    @SerializedName("site_id")
-    private String site_id;
-    @SerializedName("title")
+
+    final static String ID = "id";
+    final static String TITLE = "title";
+    final static String SUBTITLE = "subtitle";
+    final static String PRICE = "price";
+    final static String CATEGORY_ID = "category_id";
+    final static String PICTURES = "pictures";
+    final static String CURRENCY_ID = "currency_id";
+
+    public static String ATTRIBUTES = String.format("{%1$s,%2$s,%3$s,%4$s,%5$s,%6$s,%7$s}", ID,TITLE,SUBTITLE,PRICE,CATEGORY_ID,PICTURES,CURRENCY_ID);
+
+
+    @SerializedName(TITLE)
     private String title;
-    @SerializedName("subtitle")
+    @SerializedName(SUBTITLE)
     private String subtitle;
-    @SerializedName("seller_id")
-    private int seller_id;
-    @SerializedName("category_id")
+    @SerializedName(CATEGORY_ID)
     private String category_id;
-    @SerializedName("price")
+    @SerializedName(PRICE)
     private int price;
-    @SerializedName("pictures")
+    @SerializedName(PICTURES)
     private List<Picture> pictures;
-    @SerializedName("attributes")
-    private List<Attribute> attributes;
-    @SerializedName("currency_id")
+    @SerializedName(CURRENCY_ID)
     private String currencyId;
 
-    public String getId() {
-        return id;
-    }
 
-    public void setId(String id) {
-        this.id = id;
-    }
 
-    public String getSite_id() {
-        return site_id;
-    }
 
-    public void setSite_id(String site_id) {
-        this.site_id = site_id;
-    }
 
     public String getTitle() {
         return title;
@@ -58,13 +50,7 @@ public class Item {
         this.subtitle = subtitle;
     }
 
-    public int getSeller_id() {
-        return seller_id;
-    }
 
-    public void setSeller_id(int seller_id) {
-        this.seller_id = seller_id;
-    }
 
     public String getCategory_id() {
         return category_id;
@@ -90,13 +76,7 @@ public class Item {
         this.pictures = pictures;
     }
 
-    public List<Attribute> getAttributes() {
-        return attributes;
-    }
 
-    public void setAttributes(List<Attribute> attributes) {
-        this.attributes = attributes;
-    }
 
     public String getCurrencyId() {
         return currencyId;

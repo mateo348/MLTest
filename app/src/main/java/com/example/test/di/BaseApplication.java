@@ -13,6 +13,8 @@ public class BaseApplication extends Application {
                 .builder()
                 .application(this)
                 .build();
+
+
     }
 
     public AppComponent getAppComponent(){

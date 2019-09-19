@@ -51,7 +51,8 @@ public class ItemService implements IItemService {
     }
     @Override
     public void getItem(String id, Callback<Item> callback){
-        apiService.getItem(id).enqueue(callback);
+        Call<Item> call = apiService.getItem(id, Item.ATTRIBUTES);
+                call.enqueue(callback);
     }
     @Override
     public void getItemDescription(String id, Callback<ItemDescription> callback){

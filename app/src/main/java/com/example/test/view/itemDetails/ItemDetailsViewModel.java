@@ -1,20 +1,13 @@
 package com.example.test.view.itemDetails;
 
 import android.app.Application;
-import android.os.AsyncTask;
 
-import androidx.annotation.NonNull;
-import androidx.databinding.Bindable;
-import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
-import androidx.lifecycle.ViewModelProvider;
 
 import com.example.test.di.BaseApplication;
 import com.example.test.model.Item;
-import com.example.test.model.Result;
-import com.example.test.model.Search;
 import com.example.test.service.IItemService;
 
 import java.util.Currency;
@@ -49,7 +42,7 @@ public class ItemDetailsViewModel extends ViewModel {
         Callback callbackResult = new Callback<Item>() {
             @Override
             public void onResponse(Call<Item> call, Response<Item> response) {
-                selectedItem.setValue(response.body());
+               selectedItem.setValue(response.body());
             }
 
             @Override

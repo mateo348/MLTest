@@ -1,5 +1,8 @@
 package com.example.test.model;
+import androidx.databinding.BindingAdapter;
+
 import com.google.gson.annotations.SerializedName;
+import com.squareup.picasso.Picasso;
 
 import java.io.Serializable;
 import java.util.List;

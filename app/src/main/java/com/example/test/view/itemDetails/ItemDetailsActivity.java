@@ -11,15 +11,13 @@ import com.example.test.databinding.ActivityItemDetailsBinding;
 import com.example.test.model.Item;
 
 import android.os.Bundle;
-import android.widget.TextView;
 
 public class ItemDetailsActivity extends AppCompatActivity {
 
-    String selectedItemID;
-    //ViewPager vpPictures;
-    TextView tvTitle, tvPrice, tvDescription;
+    ViewPager vpPictures;
     ItemDetailsViewModel viewModel;
     ActivityItemDetailsBinding binding;
+    ItemDetailImagesAdapter imagesAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,15 +26,21 @@ public class ItemDetailsActivity extends AppCompatActivity {
         viewModel= ViewModelProviders.of(this, new ItemDetailsViewModelFactory(this.getApplication(), getIntent().getExtras().getString("SelectedItem"))).get(ItemDetailsViewModel.class);
         binding = DataBindingUtil.setContentView(this, R.layout.activity_item_details);
         binding.setLifecycleOwner(this);
+        binding.setViewModel(viewModel);
 
         viewModel.getSelectedItem().observe(this, new Observer<Item>() {
             @Override
             public void onChanged(Item item) {
-                binding.setViewModel(viewModel);
+                binding.invalidateAll();
+                imagesAdapter.notifyChanges(viewModel.getSelectedItem().getValue().getPictures());
             }
         });
 
-        //vpPictures = findViewById(R.id.vpPictures);
+        vpPictures = findViewById(R.id.vpPictures);
+        imagesAdapter = new ItemDetailImagesAdapter(this);
+        vpPictures.setAdapter(imagesAdapter);
+
+
     }
 
 

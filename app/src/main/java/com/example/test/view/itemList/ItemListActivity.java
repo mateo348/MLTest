@@ -3,6 +3,7 @@ package com.example.test.view.itemList;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
 import androidx.recyclerview.widget.DefaultItemAnimator;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.lifecycle.ViewModelProviders;
@@ -10,18 +11,12 @@ import android.os.Bundle;
 import android.widget.SearchView;
 
 import com.example.test.R;
-import com.example.test.apiconnection.ApiService;
-import com.example.test.di.BaseApplication;
 import com.example.test.model.Result;
-import com.example.test.model.Search;
+import com.example.test.util.Utils;
+import com.google.android.material.snackbar.Snackbar;
 
 import java.util.List;
 
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
 
 public class ItemListActivity extends AppCompatActivity {
 
@@ -32,6 +27,7 @@ public class ItemListActivity extends AppCompatActivity {
 
 
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,7 +35,6 @@ public class ItemListActivity extends AppCompatActivity {
 
         searchView = findViewById(R.id.searchView);
         recyclerView = findViewById(R.id.recyclerView);
-
         itemListAdapter = new ItemListAdapter(this);
         recyclerView.setAdapter(itemListAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -53,14 +48,20 @@ public class ItemListActivity extends AppCompatActivity {
         });
 
         RecyclerView.ItemAnimator itemAnimator = new DefaultItemAnimator();
-        itemAnimator.setAddDuration(1000);
-        itemAnimator.setRemoveDuration(1000);
+        itemAnimator.setAddDuration(200);
+        itemAnimator.setRemoveDuration(200);
         recyclerView.setItemAnimator(itemAnimator);
 
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String s) {
-                itemListViewModel.searchItems(s);
+                if (Utils.isInternetAvailable(ItemListActivity.this)){
+                    searchView.clearFocus();
+                    itemListViewModel.searchItems(s);
+                }
+                else
+                    Utils.showInternetError(ItemListActivity.this);
+
                 return false;
             }
 
@@ -71,8 +72,6 @@ public class ItemListActivity extends AppCompatActivity {
                 return false;
             }
         });
-
-
 
     }
 
