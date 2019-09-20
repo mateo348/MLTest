@@ -6,6 +6,8 @@ import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.lifecycle.ViewModelProviders;
+
+import android.app.Activity;
 import android.os.Bundle;
 import android.widget.SearchView;
 import com.example.test.R;
@@ -15,6 +17,8 @@ import com.example.test.di.ItemsListComponent;
 import com.example.test.di.ItemsListScope;
 import com.example.test.model.Result;
 import com.example.test.util.Utils;
+import com.google.android.material.snackbar.Snackbar;
+
 import java.util.List;
 import javax.inject.Inject;
 
@@ -49,6 +53,22 @@ public class ItemListActivity extends AppCompatActivity {
                 itemListAdapter.updateList(results);
             }
         });
+        itemListViewModel.getErrorCode().observe(this, new Observer<Integer>() {
+            @Override
+            public void onChanged(Integer integer) {
+                switch (integer) {
+                    case Utils.NOT_INTERNET_ERROR_CODE:
+                        notInternetActions();
+                        break;
+                    case Utils.SERVER_CONECCTION_ERROR_CODE:
+                        notServerConecctionActions();
+                        break;
+                    case Utils.NOT_SEARCH_RESULT_ERROR_CODE:
+                        notFindSearchResultActions();
+                        break;
+                }
+            }
+        });
 
         RecyclerView.ItemAnimator itemAnimator = new DefaultItemAnimator();
         itemAnimator.setAddDuration(200);
@@ -58,25 +78,34 @@ public class ItemListActivity extends AppCompatActivity {
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String s) {
-                if (Utils.isInternetAvailable(ItemListActivity.this)){
-                    searchView.clearFocus();
+                if (itemListViewModel.canSearchItems()){
                     itemListViewModel.searchItems(s);
                 }
-                else
-                    Utils.showInternetError(ItemListActivity.this);
 
                 return false;
             }
 
             @Override
             public boolean onQueryTextChange(String s) {
-
-
                 return false;
             }
         });
 
 
+    }
+
+
+    private void notInternetActions() {
+        Snackbar.make(this.getCurrentFocus(), R.string.no_internet, Snackbar.LENGTH_LONG).show();
+    }
+
+    private void notServerConecctionActions() {
+        Snackbar.make(this.getCurrentFocus(), R.string.server_error, Snackbar.LENGTH_LONG).show();
+    }
+
+    private void notFindSearchResultActions() {
+        //Utils.showKeyboard(this, searchView);
+        Snackbar.make(this.getCurrentFocus(), R.string.not_find_results, Snackbar.LENGTH_LONG).show();
     }
 
 

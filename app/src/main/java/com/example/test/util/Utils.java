@@ -11,20 +11,31 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 
 import com.example.test.R;
+import com.example.test.di.BaseApplication;
 import com.google.android.material.snackbar.Snackbar;
 
 public class Utils {
 
-   /* public static void hideKeyboard(Context context, View view) {
+    public static void hideKeyboard(Context context, View view) {
         InputMethodManager imm = (InputMethodManager) context.getSystemService(Activity.INPUT_METHOD_SERVICE);
         imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
-    }*/
+    }
 
-    public static boolean isInternetAvailable(Context context) {
+    public static void showKeyboard(Context context, View view) {
+        InputMethodManager imm = (InputMethodManager) context.getSystemService(Activity.INPUT_METHOD_SERVICE);
+        imm.showSoftInput(view, 0);
+    }
+
+    public static final int NOT_INTERNET_ERROR_CODE = 100;
+    public static final int SERVER_CONECCTION_ERROR_CODE = 200;
+    public static final int NOT_SEARCH_RESULT_ERROR_CODE = 300;
+    public static final String BASE_URL = "https://api.mercadolibre.com/";
+
+    public static boolean isInternetAvailable() {
 
         boolean isOnline = false;
         try {
-            ConnectivityManager cm = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+            ConnectivityManager cm = (ConnectivityManager) BaseApplication.getInstance().getSystemService(Context.CONNECTIVITY_SERVICE);
 
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
 

@@ -5,6 +5,9 @@ import java.lang.annotation.RetentionPolicy;
 
 import javax.inject.Scope;
 
+/**
+ * Definición de scope para la activity ItemDetail
+ */
 @Scope
 @Retention(RetentionPolicy.RUNTIME)
 public @interface ItemDetailScope {

@@ -5,6 +5,9 @@ import com.example.test.view.itemList.ItemsListViewModelFactory;
 import dagger.Module;
 import dagger.Provides;
 
+/**
+ * Dagger2: Modulo para DI de ItemDetails, a la cual se le pasa por parametro el ID del Item seleccionado
+ */
 @Module
 public class ItemsListModule {
 

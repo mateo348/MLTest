@@ -31,7 +31,7 @@ public class ItemDetailsViewModel extends ViewModel {
         Callback callbackResult = new Callback<Item>() {
             @Override
             public void onResponse(Call<Item> call, Response<Item> response) {
-               selectedItem.setValue(response.body());
+                onResponseSetSeletedItem(response);
             }
 
             @Override
@@ -40,7 +40,11 @@ public class ItemDetailsViewModel extends ViewModel {
             }
         };
 
-        itemService.getItem(selectedItemID, callbackResult);
+        itemService.setSelectedItem(selectedItemID, callbackResult);
+    }
+
+    private void onResponseSetSeletedItem(Response<Item> response) {
+        selectedItem.setValue(response.body());
     }
 
     public String getItemTitle(){

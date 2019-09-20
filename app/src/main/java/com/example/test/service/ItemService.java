@@ -16,17 +16,17 @@ public class ItemService implements IItemService {
     }
 
     @Override
-    public void getSearch(String query, Callback<Search> callback){
+    public void searchItems(String query, Callback<Search> callback){
         Call<Search> result = apiService.getSearch(query);
         result.enqueue(callback);
     }
     @Override
-    public void getItem(String id, Callback<Item> callback){
+    public void setSelectedItem(String id, Callback<Item> callback){
         Call<Item> call = apiService.getItem(id, Item.ATTRIBUTES);
                 call.enqueue(callback);
     }
     @Override
-    public void getItemDescription(String id, Callback<ItemDescription> callback){
+    public void setSelectedItemDescription(String id, Callback<ItemDescription> callback){
         apiService.getItemDescription(id).enqueue(callback);
     }
 }
