@@ -1,10 +1,9 @@
-package com.example.test.di;
+package com.example.test.di.base;
 
 import com.example.test.apiconnection.ApiService;
-import com.example.test.service.IItemService;
 import com.example.test.service.ItemService;
+import com.example.test.service.ItemServiceImpl;
 import com.example.test.util.Utils;
-
 import javax.inject.Singleton;
 import dagger.Module;
 import dagger.Provides;
@@ -15,7 +14,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
  * Dagger2: Se definen las clases a utilar de manera cross y singleton
  */
 @Module
-public class AppModule {
+public class BaseModule {
 
 
     @Singleton
@@ -41,7 +40,7 @@ public class AppModule {
 
     @Singleton
     @Provides
-    IItemService provideIItemService(ApiService apiService){
-        return new ItemService(apiService);
+    ItemService provideIItemService(ApiService apiService){
+        return new ItemServiceImpl(apiService);
     }
 }

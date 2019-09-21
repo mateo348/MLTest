@@ -31,8 +31,6 @@ public class ItemListAdapter extends RecyclerView.Adapter<ItemListAdapter.Result
         layoutInflater = LayoutInflater.from(context);
     }
 
-
-
     @NonNull
     @Override
     public ResultViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -46,7 +44,6 @@ public class ItemListAdapter extends RecyclerView.Adapter<ItemListAdapter.Result
 
     @Override
     public void onBindViewHolder(@NonNull ResultViewHolder holder, int position) {
-
         holder.setData(items.get(position));
     }
 
@@ -55,16 +52,10 @@ public class ItemListAdapter extends RecyclerView.Adapter<ItemListAdapter.Result
         return items == null? 0 : items.size();
     }
 
+    /**
+     * Se actualiza la lista de resultados de forma eficiente con DIffUtil
+     */
     public void updateList(List<Result> newList) {
-        //DiffUtil.DiffResult diffResult = DiffUtil.calculateDiff(new DiffUtilCallback(this.items, newList));
-
-        //diffResult.dispatchUpdatesTo(this);
-
-        //this.items.clear();
-        //this.items.addAll(newList);
-       /* this.items = newList;
-        notifyDataSetChanged();*/
-
         final DiffUtilCallback diffCallback = new DiffUtilCallback(this.items, newList);
         final DiffUtil.DiffResult diffResult = DiffUtil.calculateDiff(diffCallback);
 
@@ -95,12 +86,16 @@ public class ItemListAdapter extends RecyclerView.Adapter<ItemListAdapter.Result
             Picasso.get().load(result.getThumbnail().replace("-I","-E")).into(imgThumb);
         }
 
+        /**
+         * Sobre cada vista que representa un result se establece in onClickListener que al ser invocado
+         * llama a la activity que mostrara e detalle del item, pasandole el ID de dicho item
+         */
         @Override
         public void onClick(View view) {
             Result result = items.get(getAdapterPosition());
 
             Intent intent = new Intent(context, ItemDetailsActivity.class);
-            intent.putExtra("SelectedItem", result.getId());
+            intent.putExtra(ItemListActivity.SELECTED_ITEM_ID_KEY, result.getId());
 
             context.startActivity(intent);
 

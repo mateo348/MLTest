@@ -5,8 +5,12 @@ import com.google.gson.annotations.SerializedName;
 import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Search  {
 
+/**
+ * Representa el resultado obtenido en la busqueda de un determinado criterio
+ * Se mapearon solo los atributos necesarios
+ */
+public class Search  {
 
     @SerializedName("results")
     private ArrayList<Result> results = null;

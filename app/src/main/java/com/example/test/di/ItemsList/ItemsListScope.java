@@ -1,4 +1,4 @@
-package com.example.test.di;
+package com.example.test.di.ItemsList;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;

@@ -4,14 +4,14 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.example.test.service.IItemService;
+import com.example.test.service.ItemService;
 
 public class ItemDetailsViewModelFactory implements ViewModelProvider.Factory {
 
-    IItemService itemService;
+    ItemService itemService;
     String selectedItemId;
 
-    public ItemDetailsViewModelFactory(IItemService itemService, String selectedItemId) {
+    public ItemDetailsViewModelFactory(ItemService itemService, String selectedItemId) {
         this.itemService = itemService;
         this.selectedItemId = selectedItemId;
     }

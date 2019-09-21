@@ -6,6 +6,10 @@ import com.example.test.model.Result;
 
 import java.util.List;
 
+/**
+ * Se utiliza para verificar las diferencias entre la lista de la busqueda actual y la anterior,
+ * obteniendo una unica lista resultante haciendo mas eficiente la actualizacion del adapter del RecyclerView
+ */
 public class DiffUtilCallback extends DiffUtil.Callback {
 
     List<Result> oldList;

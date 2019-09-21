@@ -3,6 +3,9 @@ package com.example.test.model;
 
 import com.google.gson.annotations.SerializedName;
 
+/**
+ * Atributos de Item {@linkplain Item}
+ */
 public class Attribute {
 
     @SerializedName("id")

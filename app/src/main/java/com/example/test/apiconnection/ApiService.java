@@ -12,9 +12,9 @@ import retrofit2.http.Query;
 public interface ApiService {
 
     /**
-     * Obtengo con el ID del item los detalles del mismo
-     * @param id codigo del item
-     * @param attributes solo busco los atributos que me interesan mostrar
+     * Se obtiene el item a traves de su ID
+     * @param id ID del item
+     * @param attributes solo busco los atributos que me interesan mappear
      * @return Llamada a la api
      */
     @GET("items/{id}")
@@ -25,7 +25,7 @@ public interface ApiService {
      * @param query criterio de busqueda
      * @return Llamada a la api
      */
-    @GET("sites/MLA/searchItems")
+    @GET("sites/MLA/search")
     Call<Search> getSearch(@Query("q") String query);
 
     /**

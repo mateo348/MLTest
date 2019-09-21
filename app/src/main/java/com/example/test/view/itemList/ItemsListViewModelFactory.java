@@ -3,13 +3,13 @@ package com.example.test.view.itemList;
 import androidx.annotation.NonNull;
 import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
-import com.example.test.service.IItemService;
+import com.example.test.service.ItemService;
 
 public class ItemsListViewModelFactory implements ViewModelProvider.Factory {
 
-    IItemService itemService;
+    ItemService itemService;
 
-    public ItemsListViewModelFactory(IItemService itemService) {
+    public ItemsListViewModelFactory(ItemService itemService) {
         this.itemService = itemService;
     }
 

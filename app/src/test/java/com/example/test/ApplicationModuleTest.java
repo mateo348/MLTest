@@ -1,9 +1,6 @@
 package com.example.test;
 
-import android.app.Application;
-
 import com.example.test.apiconnection.ApiService;
-import com.example.test.service.IItemService;
 import com.example.test.service.ItemService;
 
 import org.mockito.Mockito;
@@ -43,7 +40,7 @@ public class ApplicationModuleTest {
 
     @Singleton
     @Provides
-    IItemService provideIItemService(ApiService apiService){
+    ItemService provideIItemService(ApiService apiService){
         return Mockito.mock(ItemService.class);
     }
 }

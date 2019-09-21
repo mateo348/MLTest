@@ -1,6 +1,9 @@
-package com.example.test.di;
+package com.example.test.view;
 
 import android.app.Application;
+
+import com.example.test.di.base.BaseComponent;
+import com.example.test.di.base.DaggerBaseComponent;
 
 /**
  * Se extiene Applicacion para poder injectar el componente base utilizado por Dagger2
@@ -9,7 +12,7 @@ import android.app.Application;
 public class BaseApplication extends Application {
 
     private static BaseApplication instance;
-    private static AppComponent appComponent;
+    private static BaseComponent baseComponent;
 
 
     public static BaseApplication getInstance() {
@@ -20,10 +23,10 @@ public class BaseApplication extends Application {
     public void onCreate() {
         super.onCreate();
         instance = this;
-        appComponent = DaggerAppComponent.builder().build();
+        baseComponent = DaggerBaseComponent.builder().build();
     }
 
-    public static AppComponent getAppComponent(){
-        return appComponent;
+    public static BaseComponent getBaseComponent(){
+        return baseComponent;
     }
 }

@@ -1,19 +1,16 @@
 package com.example.test;
 
-import com.example.test.di.AppComponent;
-import com.example.test.di.AppModule;
-import com.example.test.di.ItemsListComponent;
-import com.example.test.di.ItemsListModule;
-import com.example.test.di.ItemsListScope;
-
-import javax.inject.Singleton;
+import com.example.test.di.base.BaseComponent;
+import com.example.test.di.ItemsList.ItemsListComponent;
+import com.example.test.di.ItemsList.ItemsListModule;
+import com.example.test.di.ItemsList.ItemsListScope;
 
 import dagger.Component;
 
 @ItemsListScope
-@Component(dependencies = AppComponent.class, modules = ItemsListModule.class)
+@Component(dependencies = BaseComponent.class, modules = ItemsListModule.class)
 public interface TestComponent extends ItemsListComponent {
-    void inject(ItemServiceTest mainActivityTest);
+    void inject(ItemServiceImplTest mainActivityTest);
 
 
 }

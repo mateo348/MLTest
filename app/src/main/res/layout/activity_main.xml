@@ -29,12 +29,15 @@
 
                 <SearchView
                     android:id="@+id/searchView"
+                    android:iconifiedByDefault="false"
+                    android:layout_gravity="end"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent">
-
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:queryHint="@string/what_do_you_wAnt">
+                    <requestFocus/>
                 </SearchView>
 
             </androidx.appcompat.widget.Toolbar>
@@ -42,6 +45,15 @@
 
         </com.google.android.material.appbar.AppBarLayout>
 
+        <ProgressBar
+            android:id="@+id/pbLoading"
+            android:scaleX="0.10"
+            android:scaleY="0.10"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_centerVertical="true"
+            android:layout_centerHorizontal="true"
+            android:visibility="gone"/>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerView"

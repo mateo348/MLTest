@@ -1,6 +1,6 @@
-package com.example.test.di;
+package com.example.test.di.ItemsList;
 
-import com.example.test.service.IItemService;
+import com.example.test.service.ItemService;
 import com.example.test.view.itemList.ItemsListViewModelFactory;
 import dagger.Module;
 import dagger.Provides;
@@ -13,7 +13,7 @@ public class ItemsListModule {
 
     @ItemsListScope
     @Provides
-    ItemsListViewModelFactory provideItemsListViewModelFactory(IItemService itemService) {
+    ItemsListViewModelFactory provideItemsListViewModelFactory(ItemService itemService) {
         return new ItemsListViewModelFactory(itemService);
     }
 }

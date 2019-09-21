@@ -1,32 +1,35 @@
 package com.example.test.service;
 
-import com.example.test.apiconnection.ApiService;
 import com.example.test.model.Item;
 import com.example.test.model.ItemDescription;
 import com.example.test.model.Search;
-import retrofit2.Call;
+
 import retrofit2.Callback;
 
-public class ItemService implements IItemService {
+/**
+ * Servicio encargado de hacer las llamadas a la ApiService y ejecutar las acciones
+ * recibidas desde los viewModel
+ */
+public interface ItemService {
+    /**
+     * Intenta encontrar itmes que coincidan con el criterio de busqueda
+     * y luego ejecuta el callback
+     * @param query criterio de busqueda
+     * @param callback acciones a realizar luego de la llamad a a la API
+     */
+    void searchItems(String query, Callback<Search> callback) throws Exception;
 
-    ApiService apiService;
+    /**
+     * Establece el Item selecconado a traves del callback
+     * @param id ID del item seleccioado
+     * @param callback acciones a realizar luego de la llamad a a la API (establece el Item seleccionado)
+     */
+    void setSelectedItem(String id, Callback<Item> callback) throws Exception;
 
-    public ItemService(ApiService apiService) {
-        this.apiService = apiService;
-    }
-
-    @Override
-    public void searchItems(String query, Callback<Search> callback){
-        Call<Search> result = apiService.getSearch(query);
-        result.enqueue(callback);
-    }
-    @Override
-    public void setSelectedItem(String id, Callback<Item> callback){
-        Call<Item> call = apiService.getItem(id, Item.ATTRIBUTES);
-                call.enqueue(callback);
-    }
-    @Override
-    public void setSelectedItemDescription(String id, Callback<ItemDescription> callback){
-        apiService.getItemDescription(id).enqueue(callback);
-    }
+    /**
+     * Establece la descripcion completa del item
+     * @param id ID del item buscado
+     * @param callback acciones a realizar luego de la llamad a a la API
+     */
+    void setSelectedItemDescription(String id, Callback<ItemDescription> callback) throws Exception;
 }

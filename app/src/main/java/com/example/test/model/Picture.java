@@ -3,6 +3,9 @@ package com.example.test.model;
 
 import com.google.gson.annotations.SerializedName;
 
+/**
+ * Representa cada imagen de {@linkplain Item}
+ */
 public class Picture {
 
     @SerializedName("id")

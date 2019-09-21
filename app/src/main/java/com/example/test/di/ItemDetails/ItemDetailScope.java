@@ -1,4 +1,4 @@
-package com.example.test.di;
+package com.example.test.di.ItemDetails;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
@@ -6,7 +6,7 @@ import java.lang.annotation.RetentionPolicy;
 import javax.inject.Scope;
 
 /**
- * Definición de scope para la activity ItemDetail
+ * Dagger2: Definición de scope para la activity ItemDetail
  */
 @Scope
 @Retention(RetentionPolicy.RUNTIME)

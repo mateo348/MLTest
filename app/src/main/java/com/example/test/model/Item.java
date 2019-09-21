@@ -4,6 +4,10 @@ import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
+/**
+ * Clase para el mapeo de producto.
+ * Se estan definiendo solo las propiedades que se desean obtener de la respuesta del API
+ */
 public class Item {
 
     final static String ID = "id";
@@ -24,7 +28,7 @@ public class Item {
     @SerializedName(CATEGORY_ID)
     private String category_id;
     @SerializedName(PRICE)
-    private int price;
+    private double price;
     @SerializedName(PICTURES)
     private List<Picture> pictures;
     @SerializedName(CURRENCY_ID)
@@ -60,11 +64,11 @@ public class Item {
         this.category_id = category_id;
     }
 
-    public int getPrice() {
+    public double getPrice() {
         return price;
     }
 
-    public void setPrice(int price) {
+    public void setPrice(double price) {
         this.price = price;
     }
 

@@ -7,6 +7,7 @@ import android.widget.ImageView;
 import androidx.annotation.NonNull;
 import androidx.viewpager.widget.PagerAdapter;
 import com.example.test.model.Picture;
+import com.example.test.view.itemList.ItemListAdapter;
 import com.squareup.picasso.Picasso;
 import java.util.List;
 
@@ -36,13 +37,16 @@ public class ItemDetailImagesAdapter extends PagerAdapter {
         imageView.setScaleType(ImageView.ScaleType.FIT_CENTER);
         Picasso.get()
                 .load(pictures.get(position).getSecureUrl())
-
                 .into(imageView);
         container.addView(imageView);
 
         return imageView;
     }
 
+    /**
+     *A diferencia del metodo de actualizacion de datos usado en {@linkplain ItemListAdapter#updateList(List)}
+     * aqui no se justifica ya que solo se va a cargar la primera vez
+     */
     public void notifyChanges(List<Picture> pictures)
     {
         this.pictures = pictures;

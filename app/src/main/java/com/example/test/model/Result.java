@@ -7,6 +7,10 @@ import com.squareup.picasso.Picasso;
 import java.io.Serializable;
 import java.util.List;
 
+/**
+ * Dentro de una busqueda {@linkplain Search}, es la cabecera de las publicaciones coindidentes
+ * con el criterio de busqueda
+ */
 public class Result {
     @SerializedName("id")
     private String id;

@@ -2,6 +2,9 @@ package com.example.test.model;
 
 import com.google.gson.annotations.SerializedName;
 
+/**
+ * Descripcion larga de {@linkplain Item}
+ */
 public class ItemDescription {
     @SerializedName("text")
     private String text;
