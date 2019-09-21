@@ -34,7 +34,7 @@ public class ItemDetailImagesAdapter extends PagerAdapter {
     public Object instantiateItem(ViewGroup container, int position) {
         ImageView imageView = new ImageView(mContext);
 
-        imageView.setScaleType(ImageView.ScaleType.FIT_CENTER);
+        //imageView.setScaleType(ImageView.ScaleType.FIT_CENTER);
         Picasso.get()
                 .load(pictures.get(position).getSecureUrl())
                 .into(imageView);

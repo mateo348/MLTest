@@ -125,7 +125,7 @@ public class ItemDetailsViewModel extends ViewModel {
 
     public String getItemPrice(){
         if (selectedItem.getValue() != null)
-            return Currency.getInstance(Locale.getDefault()).getSymbol() +  Double.valueOf(getSelectedItem().getValue().getPrice());
+            return selectedItem.getValue().getFormatedPrice();
         else
             return "";
     }

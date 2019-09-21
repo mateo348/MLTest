@@ -1,6 +1,7 @@
 package com.example.test.model;
 import androidx.databinding.BindingAdapter;
 
+import com.example.test.util.Utils;
 import com.google.gson.annotations.SerializedName;
 import com.squareup.picasso.Picasso;
 
@@ -63,6 +64,7 @@ public class Result {
         return title;
     }
 
+    public String getFormatedPrice() {return Utils.getCurrencySymbol(currencyId)+Utils.formatPrice(price.intValue()); }
     public Double getPrice() {
         return price;
     }
@@ -91,8 +93,9 @@ public class Result {
         return stopTime;
     }
 
+    public String getConditionText() { return Utils.getConditionText(condition);}
     public String getCondition() {
-        return condition;
+        return Utils.getConditionText(condition);
     }
 
     public String getPermalink() {

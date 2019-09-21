@@ -42,7 +42,7 @@
                 />
             <TextView
                 android:id="@+id/tvPrice"
-                android:text="@{result.price.toString()}"
+                android:text="@{result.getFormatedPrice()}"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textStyle="bold"
@@ -51,7 +51,7 @@
                 android:id="@+id/tvCondition"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@{result.condition}"
+                android:text="@{result.getConditionText()}"
                 android:padding="4dp"
                 android:textSize="12sp" />
 

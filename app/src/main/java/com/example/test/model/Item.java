@@ -1,5 +1,6 @@
 package com.example.test.model;
 
+import com.example.test.util.Utils;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
@@ -17,10 +18,13 @@ public class Item {
     final static String CATEGORY_ID = "category_id";
     final static String PICTURES = "pictures";
     final static String CURRENCY_ID = "currency_id";
+    final static String ORIGINAL_PRICE = "original_price";
 
-    public static String ATTRIBUTES = String.format("{%1$s,%2$s,%3$s,%4$s,%5$s,%6$s,%7$s}", ID,TITLE,SUBTITLE,PRICE,CATEGORY_ID,PICTURES,CURRENCY_ID);
+    public static String ATTRIBUTES = String.format("{%1$s,%2$s,%3$s,%4$s,%5$s,%6$s,%7$s}", ID,TITLE,PRICE,CATEGORY_ID,PICTURES,CURRENCY_ID,ORIGINAL_PRICE);
 
 
+    @SerializedName(ID)
+    private String id;
     @SerializedName(TITLE)
     private String title;
     @SerializedName(SUBTITLE)
@@ -28,7 +32,7 @@ public class Item {
     @SerializedName(CATEGORY_ID)
     private String category_id;
     @SerializedName(PRICE)
-    private double price;
+    private Double price;
     @SerializedName(PICTURES)
     private List<Picture> pictures;
     @SerializedName(CURRENCY_ID)
@@ -64,7 +68,9 @@ public class Item {
         this.category_id = category_id;
     }
 
-    public double getPrice() {
+    public String getFormatedPrice() {
+        return Utils.getCurrencySymbol(currencyId)+Utils.formatPrice(price.intValue()); }
+    public Double getPrice() {
         return price;
     }
 

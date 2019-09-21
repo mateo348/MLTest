@@ -7,6 +7,8 @@ import com.example.test.util.Utils;
 import javax.inject.Singleton;
 import dagger.Module;
 import dagger.Provides;
+import okhttp3.OkHttpClient;
+import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
@@ -25,10 +27,24 @@ public class BaseModule {
 
     @Singleton
     @Provides
-    Retrofit provideRetrofit(GsonConverterFactory gsonConverterFactory){
+    HttpLoggingInterceptor provideHttpLoggingInterceptor(){
+        return new HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY);
+    }
+
+    @Singleton
+    @Provides
+    OkHttpClient provideOkHttpClient(HttpLoggingInterceptor loggingInterceptor){
+        return new OkHttpClient.Builder().addInterceptor(loggingInterceptor).build();
+    }
+
+
+    @Singleton
+    @Provides
+    Retrofit provideRetrofit(OkHttpClient client, GsonConverterFactory gsonConverterFactory){
         return new Retrofit.Builder()
                 .baseUrl(Utils.BASE_URL)
-                .addConverterFactory(gsonConverterFactory.create())
+                .addConverterFactory(gsonConverterFactory)
+                .client(client)
                 .build();
     }
 

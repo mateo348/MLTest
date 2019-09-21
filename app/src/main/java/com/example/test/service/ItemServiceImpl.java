@@ -39,7 +39,8 @@ public class ItemServiceImpl implements ItemService {
     @Override
     public void setSelectedItem(String id, Callback<Item> callback) throws Exception{
         Log.i(TAG, "setSelectedItem: id=" + id);
-        apiService.getItem(id, Item.ATTRIBUTES).enqueue(callback);
+        String attr = Item.ATTRIBUTES;
+        apiService.getItem(id, attr).enqueue(callback);
     }
 
     /**
