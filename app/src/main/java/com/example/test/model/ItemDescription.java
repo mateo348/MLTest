@@ -11,20 +11,9 @@ public class ItemDescription {
     @SerializedName("plain_text")
     private String plainText;
 
-    public String getText() {
-        return text;
-    }
-
-    public void setText(String text) {
-        this.text = text;
-    }
-
     public String getPlainText() {
         return plainText;
     }
 
-    public void setPlainText(String plainText) {
-        this.plainText = plainText;
-    }
 
 }

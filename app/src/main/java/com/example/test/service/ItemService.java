@@ -11,6 +11,13 @@ import retrofit2.Callback;
  * recibidas desde los viewModel
  */
 public interface ItemService {
+
+    /**
+     * Codigos re respuesta de la API
+     */
+    int SERVER_OK_CODE = 200;
+    int SERVER_ERROR_CODE = 404;
+
     /**
      * Intenta encontrar itmes que coincidan con el criterio de busqueda
      * y luego ejecuta el callback

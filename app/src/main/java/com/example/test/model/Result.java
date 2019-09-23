@@ -1,11 +1,8 @@
 package com.example.test.model;
-import androidx.databinding.BindingAdapter;
 
-import com.example.test.util.Utils;
+import com.example.test.util.AppUtils;
 import com.google.gson.annotations.SerializedName;
-import com.squareup.picasso.Picasso;
 
-import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -64,7 +61,7 @@ public class Result {
         return title;
     }
 
-    public String getFormatedPrice() {return Utils.getCurrencySymbol(currencyId)+Utils.formatPrice(price.intValue()); }
+    public String getFormatedPrice() {return AppUtils.getInstance().getCurrencySymbol(currencyId)+ AppUtils.getInstance().formatPrice(price.intValue()); }
     public Double getPrice() {
         return price;
     }
@@ -93,9 +90,9 @@ public class Result {
         return stopTime;
     }
 
-    public String getConditionText() { return Utils.getConditionText(condition);}
+    public String getConditionText() { return AppUtils.getInstance().getConditionText(condition);}
     public String getCondition() {
-        return Utils.getConditionText(condition);
+        return AppUtils.getInstance().getConditionText(condition);
     }
 
     public String getPermalink() {

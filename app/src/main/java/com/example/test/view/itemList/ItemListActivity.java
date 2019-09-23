@@ -16,7 +16,7 @@ import android.widget.SearchView;
 import android.widget.Toast;
 import com.example.test.R;
 import com.example.test.di.ItemsList.DaggerItemsListComponent;
-import com.example.test.util.Utils;
+import com.example.test.util.AppUtils;
 import com.example.test.view.BaseApplication;
 import com.example.test.di.ItemsList.ItemsListComponent;
 import com.example.test.di.ItemsList.ItemsListScope;
@@ -24,8 +24,6 @@ import com.example.test.model.Result;
 
 import java.util.List;
 import javax.inject.Inject;
-
-import okhttp3.internal.Util;
 
 /**
  * Activity que representa la pantalla de busqueda de publicaciones (item)
@@ -82,8 +80,11 @@ public class ItemListActivity extends AppCompatActivity {
                     case ItemListViewModel.SERVER_CONECCTION_ERROR_CODE:
                         notServerConecctionActions();
                         break;
-                    case ItemListViewModel.NOT_SEARCH_RESULT_ERROR_CODE:
+                    case ItemListViewModel.NOT_FOUND_RESULT_ERROR_CODE:
                         notFindSearchResultActions();
+                        break;
+                    case ItemListViewModel.SERVER_ERROR_CODE:
+                        onServerErrorActions();
                         break;
                 }
                 onDoneSearchControlsVisibility();
@@ -96,7 +97,7 @@ public class ItemListActivity extends AppCompatActivity {
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
-                if (itemListViewModel.canSearchItems(Utils.isInternetAvailable())){
+                if (itemListViewModel.canSearchItems(AppUtils.getInstance())){
                     onSearchControlsVisibility();
                     itemListViewModel.searchItems(query);
                 } return false;
@@ -169,19 +170,19 @@ public class ItemListActivity extends AppCompatActivity {
     }
 
     private void notInternetActions() {
-        Log.w(TAG, "notInternetActions: " + this.getString(R.string.no_internet));
         Toast.makeText(this, R.string.no_internet, Toast.LENGTH_LONG).show();
     }
 
     private void notServerConecctionActions() {
-        Log.w(TAG, "notServerConecctionActions: " + this.getString(R.string.server_error));
-        Toast.makeText(this, R.string.server_error, Toast.LENGTH_LONG).show();
+        Toast.makeText(this, R.string.server_connection_error, Toast.LENGTH_LONG).show();
     }
 
     private void notFindSearchResultActions() {
-        //Utils.showKeyboard(this, searchView);
-        Log.w(TAG, "notFindSearchResultActions: " + this.getString(R.string.not_find_results) );
         Toast.makeText(this, R.string.not_find_results, Toast.LENGTH_LONG).show();
+    }
+
+    private void onServerErrorActions() {
+        Toast.makeText(this, R.string.server_error, Toast.LENGTH_LONG).show();
     }
 
 

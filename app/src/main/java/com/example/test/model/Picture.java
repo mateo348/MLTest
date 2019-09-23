@@ -29,14 +29,6 @@ public class Picture {
         this.id = id;
     }
 
-    public String getUrl() {
-        return url;
-    }
-
-    public void setUrl(String url) {
-        this.url = url;
-    }
-
     public String getSecureUrl() {
         return secureUrl;
     }

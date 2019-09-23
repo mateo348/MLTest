@@ -2,16 +2,14 @@ package com.example.test.view.itemList;
 
 import android.util.Log;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.VisibleForTesting;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
-import androidx.lifecycle.ViewModelProvider;
 
 import com.example.test.model.Result;
 import com.example.test.model.Search;
 import com.example.test.service.ItemService;
-import com.example.test.util.Utils;
+import com.example.test.util.AppUtils;
 
 import java.util.List;
 import retrofit2.Call;
@@ -22,18 +20,22 @@ public class ItemListViewModel extends ViewModel {
     private static final String TAG = "ItemListViewModel";
 
     public static final int NOT_INTERNET_ERROR_CODE = 100;
-    public static final int SERVER_CONECCTION_ERROR_CODE = 200;
-    public static final int NOT_SEARCH_RESULT_ERROR_CODE = 300;
+    public static final int NOT_FOUND_RESULT_ERROR_CODE = 300;
+    public static final int SERVER_ERROR_CODE = 404;
+    public static final int SERVER_CONECCTION_ERROR_CODE = 400;
 
     /**
      * Lista de resultados de busqueda
      */
     MutableLiveData<List<Result>> items = new MutableLiveData<>();
-
     /**
      * Codigo de error, utilizado en caso de no poder realizar la busqueda o que ésta falle
      */
     MutableLiveData<Integer> errorCode = new MutableLiveData<>();
+
+    public MutableLiveData<List<Result>> getItems(){ return items; }
+
+    public MutableLiveData<Integer> getErrorCode() { return errorCode; }
 
     ItemService itemService;
 
@@ -43,9 +45,7 @@ public class ItemListViewModel extends ViewModel {
 
 
 
-    public MutableLiveData<List<Result>> getItems(){ return items; }
 
-    public MutableLiveData<Integer> getErrorCode() { return errorCode; }
 
 
     /**
@@ -59,12 +59,10 @@ public class ItemListViewModel extends ViewModel {
             Callback callbackResult = new Callback<Search>() {
                 @Override
                 public void onResponse(Call<Search> call, Response<Search> response) {
-                    onResponseSearchItems(response);
-                }
-
+                    onResponseSearchItems(response);}
                 @Override
                 public void onFailure(Call<Search> call, Throwable t) {
-                    onFailureSearchItems(t);
+                    onFailureApiCall(t);
                 }
             };
 
@@ -75,34 +73,39 @@ public class ItemListViewModel extends ViewModel {
     }
 
 
-    public boolean canSearchItems(boolean isInternetAvailable)
+    /**
+     * Evalua si existe conexion a internet para poder realizar la busqueda
+     * @param appUtils AppUtils obtiene el estado de la conexion a internet
+     * @return
+     */
+    public boolean canSearchItems(AppUtils appUtils)
     {
-        if (!isInternetAvailable) {
+        if (!appUtils.isInternetAvailable()) {
             errorCode.setValue(NOT_INTERNET_ERROR_CODE);
-        }
-        return isInternetAvailable;
-    }
-
-    @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
-    protected boolean isInternetAvailable() {
-        return Utils.isInternetAvailable();
+            Log.w(TAG, "canSearchItems: No internet Connection"); }
+        return appUtils.isInternetAvailable();
     }
 
     /**
      * Si la respuesta del servidor trajo resultados, se establece en items, de lo contrario se
-     * especifica codigo de error (se deberia evaluar por codigo de response y de esa manera determinar
-     * el errorCode, pero se hizo de esta manera por desconocimiento de dichos codigos)
+     * especifica codigo de error
      * @param response respuesta de la llamada a la API
      */
     @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
     protected  void onResponseSearchItems(Response<Search> response) {
-        if(response.body() == null ||
-                response.body().getResults()== null ||
-                response.body().getResults().size() == 0) {
-            errorCode.setValue(NOT_SEARCH_RESULT_ERROR_CODE);
-        }
-        if (response.body() != null && response.body().getResults() != null){
-            items.setValue(response.body().getResults());
+        switch (response.code()) {
+            case ItemService.SERVER_OK_CODE:
+                if(response.body().getResults().size() > 0){
+                    items.setValue(response.body().getResults());
+                    Log.i(TAG, "onResponseSearchItems: Items Found" );}
+                else{
+                    errorCode.setValue(NOT_FOUND_RESULT_ERROR_CODE);
+                    Log.w(TAG, "onResponseSearchItems: Not found results");}
+                break;
+            case ItemService.SERVER_ERROR_CODE:
+                errorCode.setValue(SERVER_ERROR_CODE);
+                Log.w(TAG, "onResponseSearchItems ServerError: " + response.message());
+                break;
         }
     }
 
@@ -111,7 +114,8 @@ public class ItemListViewModel extends ViewModel {
      * @param t error de la llamada a la API
      */
     @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
-    protected void onFailureSearchItems(Throwable t) {
+    protected void onFailureApiCall(Throwable t) {
         errorCode.setValue(SERVER_CONECCTION_ERROR_CODE);
+        Log.w(TAG, "onFailureApiCall: ", t.getCause());
     }
 }

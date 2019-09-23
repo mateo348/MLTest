@@ -7,12 +7,20 @@ import android.net.NetworkInfo;
 import android.os.Build;
 import com.example.test.view.BaseApplication;
 
+import java.text.NumberFormat;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 
-public class Utils {
+public class AppUtils {
 
+
+    private static AppUtils appUtils;
+    public static AppUtils getInstance(){
+        if (appUtils == null)
+            appUtils = new AppUtils();
+        return appUtils;
+    }
 
 
     public static final String BASE_URL = "https://api.mercadolibre.com/";
@@ -23,7 +31,7 @@ public class Utils {
      * si la red a la que esta conectado (si lo estuviese), tiene internet
      * @return Tiene internet o no
      */
-    public static boolean isInternetAvailable() {
+    public boolean isInternetAvailable() {
 
         boolean isOnline = false;
         try {
@@ -49,10 +57,10 @@ public class Utils {
 
     }
 
-    static Map<String, String> currencyMap = null;
-    static Map<String, String> conditionMap = null;
+    Map<String, String> currencyMap = null;
+    Map<String, String> conditionMap = null;
 
-    public static String getCurrencySymbol(String currency){
+    public String getCurrencySymbol(String currency){
         if(currencyMap == null){
             currencyMap =  new HashMap<String, String>();
             currencyMap.put("ARS","$");
@@ -64,7 +72,7 @@ public class Utils {
             return currency;
     }
 
-    public static String getConditionText(String condition) {
+    public String getConditionText(String condition) {
         if(conditionMap == null){
             conditionMap =  new HashMap<String, String>();
             conditionMap.put("used","Usado");
@@ -76,8 +84,8 @@ public class Utils {
             return condition;
     }
 
-    public static String formatPrice(int number){
-        return String.format(Locale.ITALIAN,"%,d", number);
+    public String formatPrice(int number){
+        return String.format(Locale.getDefault(),"%,d", number);
     }
 
 

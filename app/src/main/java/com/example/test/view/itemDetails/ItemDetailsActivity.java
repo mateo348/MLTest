@@ -16,7 +16,6 @@ import com.example.test.di.ItemDetails.ItemDetailsComponent;
 import com.example.test.di.ItemDetails.ItemDetailsModule;
 import com.example.test.model.Item;
 import com.example.test.view.itemList.ItemListActivity;
-import com.google.android.material.snackbar.Snackbar;
 
 import android.os.Bundle;
 import android.util.Log;
@@ -46,10 +45,7 @@ public class ItemDetailsActivity extends AppCompatActivity {
 
         setupDagger();
 
-        viewModel = ViewModelProviders.of(this, viewModelFactory).get(ItemDetailsViewModel.class);
-        binding = DataBindingUtil.setContentView(this, R.layout.activity_item_details);
-        binding.setLifecycleOwner(this);
-        binding.setViewModel(viewModel);
+        setupControls();
 
         /**
          *Se observa el cambio que se produce sobre el item seleccionado al ser instanciado
@@ -59,12 +55,15 @@ public class ItemDetailsActivity extends AppCompatActivity {
             @Override
             public void onChanged(Item item) {
                 Log.i(TAG, ItemDetailsActivity.this.getString(R.string.seted_selected_item));
-                binding.invalidateAll();
+                binding.setViewModel(viewModel);
                 imagesAdapter.notifyChanges(viewModel.getSelectedItem().getValue().getPictures());
                 onDoneSearchControlsVisibility();
             }
         });
 
+        /**
+         * Se observa el cambio sobre el objeto que tiene la descripcion del item y se actualiza la vista
+         */
         viewModel.getItemDescription().observe(this, new Observer<ItemDescription>() {
             @Override
             public void onChanged(ItemDescription itemDescription) {
@@ -73,27 +72,42 @@ public class ItemDetailsActivity extends AppCompatActivity {
             }
         });
 
+        /**
+         * Se observan los cambios sobre el codigo de error y realiza las acciones pertinentes
+         */
         viewModel.getErrorCode().observe(this, new Observer<Integer>() {
             @Override
             public void onChanged(Integer integer) {
                 switch (integer) {
                     case ItemDetailsViewModel.SERVER_CONECCTION_ERROR_CODE:
                         notServerConecctionActions();
+                    case ItemDetailsViewModel.SERVER_ERROR_CODE:
+                        onServerErrorActions();
                         break;
                 }
                 onDoneSearchControlsVisibility();
             }
         });
+
+        onSearchControlsVisibility();
+    }
+
+    private void setupControls() {
+        viewModel = ViewModelProviders.of(this, viewModelFactory).get(ItemDetailsViewModel.class);
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_item_details);
+        binding.setLifecycleOwner(this);
         pbLoading = findViewById(R.id.pbLoading);
         cardView = findViewById(R.id.cardView);
         vpPictures = findViewById(R.id.vpPictures);
         imagesAdapter = new ItemDetailImagesAdapter(this);
         vpPictures.setAdapter(imagesAdapter);
-        onSearchControlsVisibility();
     }
 
     private void notServerConecctionActions() {
-        Log.w(TAG, "notServerConecctionActions: " + this.getString(R.string.server_error));
+        Toast.makeText(this, R.string.server_connection_error, Toast.LENGTH_LONG).show();
+    }
+
+    private void onServerErrorActions() {
         Toast.makeText(this, R.string.server_error, Toast.LENGTH_LONG).show();
     }
 

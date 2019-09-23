@@ -9,8 +9,7 @@ import androidx.lifecycle.ViewModel;
 import com.example.test.model.Item;
 import com.example.test.model.ItemDescription;
 import com.example.test.service.ItemService;
-import java.util.Currency;
-import java.util.Locale;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -19,6 +18,7 @@ public class ItemDetailsViewModel extends ViewModel {
 
     private static final String TAG = "ItemDetailsViewModel";
     public static final int SERVER_CONECCTION_ERROR_CODE = 200;
+    public static final int SERVER_ERROR_CODE = 404;
 
     ItemService itemService;
 
@@ -58,7 +58,7 @@ public class ItemDetailsViewModel extends ViewModel {
 
                 @Override
                 public void onFailure(Call<Item> call, Throwable t) {
-                    onFailureSearchItems(t);
+                    onFailureApiCall(t);
                 }
             };
 
@@ -79,7 +79,7 @@ public class ItemDetailsViewModel extends ViewModel {
 
                 @Override
                 public void onFailure(Call<ItemDescription> call, Throwable t) {
-                    onFailureSearchItems(t);
+                    onFailureApiCall(t);
                 }
             };
 
@@ -90,35 +90,42 @@ public class ItemDetailsViewModel extends ViewModel {
     }
 
     @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
-    private void onResponseSetSeletedItemDescription(Response<ItemDescription> response) {
-        if (response.body() != null)
-            itemDescription.setValue(response.body());
-        else
-            errorCode.setValue(SERVER_CONECCTION_ERROR_CODE);
+    protected void onResponseSetSeletedItemDescription(Response<ItemDescription> response) {
+        switch (response.code()) {
+            case ItemService.SERVER_OK_CODE:
+                itemDescription.setValue(response.body());
+                break;
+            case ItemService.SERVER_ERROR_CODE:
+                errorCode.setValue(SERVER_ERROR_CODE);
+                Log.w(TAG, "onResponseSetSeletedItemDescription ServerError: " + response.message());
+                break;
+        }
     }
-
-
     /**
      * Si el Api invicada en el servicio encontró el item, se establece en selectedItem
      * @param response
      */
     @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
-    private void onResponseSetSeletedItem(Response<Item> response) {
-        if (response.body() != null)
-            selectedItem.setValue(response.body());
-        else
-            errorCode.setValue(SERVER_CONECCTION_ERROR_CODE);
+    protected void onResponseSetSeletedItem(Response<Item> response) {
 
+        switch (response.code()) {
+            case ItemService.SERVER_OK_CODE:
+                selectedItem.setValue(response.body());
+                break;
+            case ItemService.SERVER_ERROR_CODE:
+                errorCode.setValue(ItemService.SERVER_ERROR_CODE);
+                Log.w(TAG, "onResponseSetSeletedItem ServerError: " + response.message());
+                break;
+        }
     }
-
     /**
      * Si la llamada a la API falló, se establece el codigo de error
      * @param t error de la llamada a la API
      */
     @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
-    private void onFailureSearchItems(Throwable t) {
+    protected void onFailureApiCall(Throwable t) {
         errorCode.setValue(SERVER_CONECCTION_ERROR_CODE);
-        Log.e(TAG, "onFailureSearchItems: ", t);
+        Log.w(TAG, "onFailureApiCall: ", t.getCause());
     }
 
     public String getItemTitle(){

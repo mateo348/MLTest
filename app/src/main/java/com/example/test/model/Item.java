@@ -1,6 +1,6 @@
 package com.example.test.model;
 
-import com.example.test.util.Utils;
+import com.example.test.util.AppUtils;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
@@ -69,7 +69,7 @@ public class Item {
     }
 
     public String getFormatedPrice() {
-        return Utils.getCurrencySymbol(currencyId)+Utils.formatPrice(price.intValue()); }
+        return AppUtils.getInstance().getCurrencySymbol(currencyId)+ AppUtils.getInstance().formatPrice(price.intValue()); }
     public Double getPrice() {
         return price;
     }

@@ -3,7 +3,7 @@ package com.example.test.di.base;
 import com.example.test.apiconnection.ApiService;
 import com.example.test.service.ItemService;
 import com.example.test.service.ItemServiceImpl;
-import com.example.test.util.Utils;
+import com.example.test.util.AppUtils;
 import javax.inject.Singleton;
 import dagger.Module;
 import dagger.Provides;
@@ -42,7 +42,7 @@ public class BaseModule {
     @Provides
     Retrofit provideRetrofit(OkHttpClient client, GsonConverterFactory gsonConverterFactory){
         return new Retrofit.Builder()
-                .baseUrl(Utils.BASE_URL)
+                .baseUrl(AppUtils.BASE_URL)
                 .addConverterFactory(gsonConverterFactory)
                 .client(client)
                 .build();

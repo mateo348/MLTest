@@ -1,9 +1,10 @@
 <resources>
     <string name="app_name">Test</string>
     <string name="no_internet">No hay conexión a intenet</string>
-    <string name="server_error">Error al conectar con el servidor</string>
+    <string name="server_connection_error">Error al conectar con el servidor</string>
     <string name="not_find_results">No se encontraron resultados para la busqueda</string>
     <string name="new_results">Se encontraron nuevos resultados</string>
     <string name="seted_selected_item">Item seleccionado establecido</string>
     <string name="what_do_you_wAnt">¿Qué estas buscando?</string>
+    <string name="server_error">Error en el servidor</string>
 </resources>

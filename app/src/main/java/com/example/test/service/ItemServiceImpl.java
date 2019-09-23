@@ -40,7 +40,7 @@ public class ItemServiceImpl implements ItemService {
     public void setSelectedItem(String id, Callback<Item> callback) throws Exception{
         Log.i(TAG, "setSelectedItem: id=" + id);
         String attr = Item.ATTRIBUTES;
-        apiService.getItem(id, attr).enqueue(callback);
+        apiService.getItem(id , attr).enqueue(callback);
     }
 
     /**
