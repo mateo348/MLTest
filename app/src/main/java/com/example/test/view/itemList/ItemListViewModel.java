@@ -75,26 +75,33 @@ public class ItemListViewModel extends ViewModel {
     }
 
 
-    public boolean canSearchItems()
+    public boolean canSearchItems(boolean isInternetAvailable)
     {
-        boolean retval = Utils.isInternetAvailable();
-        if (!retval) {
+        if (!isInternetAvailable) {
             errorCode.setValue(NOT_INTERNET_ERROR_CODE);
         }
-        return retval;
+        return isInternetAvailable;
+    }
+
+    @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
+    protected boolean isInternetAvailable() {
+        return Utils.isInternetAvailable();
     }
 
     /**
      * Si la respuesta del servidor trajo resultados, se establece en items, de lo contrario se
-     * especifica codigo de error
+     * especifica codigo de error (se deberia evaluar por codigo de response y de esa manera determinar
+     * el errorCode, pero se hizo de esta manera por desconocimiento de dichos codigos)
      * @param response respuesta de la llamada a la API
      */
     @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
     protected  void onResponseSearchItems(Response<Search> response) {
-        if(response.body() == null || response.body().getResults().size() == 0) {
+        if(response.body() == null ||
+                response.body().getResults()== null ||
+                response.body().getResults().size() == 0) {
             errorCode.setValue(NOT_SEARCH_RESULT_ERROR_CODE);
         }
-        if (response.body() != null){
+        if (response.body() != null && response.body().getResults() != null){
             items.setValue(response.body().getResults());
         }
     }

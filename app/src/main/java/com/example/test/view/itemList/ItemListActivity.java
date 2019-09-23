@@ -16,6 +16,7 @@ import android.widget.SearchView;
 import android.widget.Toast;
 import com.example.test.R;
 import com.example.test.di.ItemsList.DaggerItemsListComponent;
+import com.example.test.util.Utils;
 import com.example.test.view.BaseApplication;
 import com.example.test.di.ItemsList.ItemsListComponent;
 import com.example.test.di.ItemsList.ItemsListScope;
@@ -23,6 +24,8 @@ import com.example.test.model.Result;
 
 import java.util.List;
 import javax.inject.Inject;
+
+import okhttp3.internal.Util;
 
 /**
  * Activity que representa la pantalla de busqueda de publicaciones (item)
@@ -93,7 +96,7 @@ public class ItemListActivity extends AppCompatActivity {
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
-                if (itemListViewModel.canSearchItems()){
+                if (itemListViewModel.canSearchItems(Utils.isInternetAvailable())){
                     onSearchControlsVisibility();
                     itemListViewModel.searchItems(query);
                 } return false;

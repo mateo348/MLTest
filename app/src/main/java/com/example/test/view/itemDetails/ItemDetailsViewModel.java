@@ -2,6 +2,7 @@ package com.example.test.view.itemDetails;
 
 import android.util.Log;
 
+import androidx.annotation.VisibleForTesting;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
@@ -57,7 +58,7 @@ public class ItemDetailsViewModel extends ViewModel {
 
                 @Override
                 public void onFailure(Call<Item> call, Throwable t) {
-
+                    onFailureSearchItems(t);
                 }
             };
 
@@ -78,7 +79,7 @@ public class ItemDetailsViewModel extends ViewModel {
 
                 @Override
                 public void onFailure(Call<ItemDescription> call, Throwable t) {
-                    t.getCause();
+                    onFailureSearchItems(t);
                 }
             };
 
@@ -88,6 +89,7 @@ public class ItemDetailsViewModel extends ViewModel {
         }
     }
 
+    @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
     private void onResponseSetSeletedItemDescription(Response<ItemDescription> response) {
         if (response.body() != null)
             itemDescription.setValue(response.body());
@@ -100,6 +102,7 @@ public class ItemDetailsViewModel extends ViewModel {
      * Si el Api invicada en el servicio encontró el item, se establece en selectedItem
      * @param response
      */
+    @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
     private void onResponseSetSeletedItem(Response<Item> response) {
         if (response.body() != null)
             selectedItem.setValue(response.body());
@@ -112,8 +115,10 @@ public class ItemDetailsViewModel extends ViewModel {
      * Si la llamada a la API falló, se establece el codigo de error
      * @param t error de la llamada a la API
      */
+    @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
     private void onFailureSearchItems(Throwable t) {
         errorCode.setValue(SERVER_CONECCTION_ERROR_CODE);
+        Log.e(TAG, "onFailureSearchItems: ", t);
     }
 
     public String getItemTitle(){

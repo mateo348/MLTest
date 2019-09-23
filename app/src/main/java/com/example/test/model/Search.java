@@ -12,6 +12,10 @@ import java.util.ArrayList;
  */
 public class Search  {
 
+
+    public Search(ArrayList<Result> results){
+        this.results = results;
+    }
     @SerializedName("results")
     private ArrayList<Result> results = null;
 
