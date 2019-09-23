@@ -2,18 +2,21 @@ package com.example.test;
 
 import android.util.Log;
 
+import androidx.annotation.VisibleForTesting;
+import androidx.arch.core.executor.testing.InstantTaskExecutorRule;
+
 import com.example.test.apiconnection.ApiService;
+import com.example.test.forTest.ItemListViewModelForTest;
 import com.example.test.model.Search;
 import com.example.test.service.ItemService;
 import com.example.test.service.ItemServiceImpl;
-import com.example.test.testObjects.ByPassObject;
-import com.example.test.testObjects.ItemListViewModelForTest;
 import com.example.test.util.Utils;
 import com.example.test.view.itemList.ItemListViewModel;
 
 
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -49,6 +52,10 @@ public class ItemServiceImplTest {
 
     private Retrofit retrofit;
 
+    @Rule
+    public InstantTaskExecutorRule instantTaskExecutorRule =
+            new InstantTaskExecutorRule();
+
     @Mock
     ApiService apiService;
 
@@ -56,7 +63,7 @@ public class ItemServiceImplTest {
     ItemServiceImpl itemService;
 
     @InjectMocks
-    ItemListViewModel viewModel;
+    ItemListViewModelForTest viewModel;
 
 
     @Before
@@ -70,69 +77,41 @@ public class ItemServiceImplTest {
                 .build();
     }
 
-
-
-
-    /*void searchItems(String query, Callback<Search> callback);
-    void setSelectedItem(String id, Callback<Item> callback);
-    void setSelectedItemDescription(String id, Callback<ItemDescription> callback);*/
-
-    //@Mock
-    //Call<Search> mockedCall;
-
     @Test
-    public void itemTest() {
+    public void searchItemsNotResults()
+    {
+        ApiService apiEndpoints = retrofit.create(ApiService.class);
+
+        final Call<Search> call = apiEndpoints.getSearch("Casa");
+
         try {
+            final Response<Search> response = call.execute();
 
-        final Call<Search> mockedCall = Mockito.mock(Call.class);
-        when(apiService.getSearch("1")).thenReturn(mockedCall);
-        final Response<Search> response = Response.success(new Search());
-        Mockito.doAnswer(new Answer() {
-            @Override
-            public Void answer(InvocationOnMock invocation) throws Throwable {
-                Callback<Search> callback = invocation.getArgument(0);
-                callback.onResponse(mockedCall, response);
-                return null;
-            }
-        }).when(mockedCall).enqueue(any(Callback.class));
+            viewModel.onResponseSearchItems(response);
 
+            Assert.assertNotNull(viewModel.getItems().getValue());
 
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-        catch (Exception ex)
-        {
-            Log.e("Test1", "itemTest: ",ex );
-        }
-
-
     }
 
     @Test
-    public void test2()
+    public void searchItemsNotFoundResults()
     {
 
         ApiService apiEndpoints = retrofit.create(ApiService.class);
 
-        final Call<Search> call = apiEndpoints.getSearch("1");
+        final Call<Search> call = apiEndpoints.getSearch("#%$#%$%&");
 
         try {
             final Response<Search> response = call.execute();
-            Search authResponse = response.body();
 
-            final Call<Search> mockedCall = Mockito.mock(Call.class);
-            Mockito.doAnswer(new Answer() {
-                @Override
-                public Void answer(InvocationOnMock invocation) throws Throwable {
-                    Callback<Search> callback = invocation.getArgument(0);
-                    callback.onResponse(call, response);
-                    return null;
-                }
-            }).when(mockedCall).enqueue(any(Callback.class));
+            viewModel.onResponseSearchItems(response);
 
-            when(apiService.getSearch("1")).thenReturn(mockedCall);
-
-            viewModel.searchItems("1");
-
-            verify(itemService).searchItems("1",any(Callback.class));
+            Assert.assertNotNull(viewModel.getItems().getValue());
+            Assert.assertEquals(viewModel.getItems().getValue().size(), 0);
+            Assert.assertEquals(viewModel.getErrorCode().getValue(), Integer.valueOf(ItemListViewModel.NOT_SEARCH_RESULT_ERROR_CODE));
 
         } catch (Exception e) {
             e.printStackTrace();

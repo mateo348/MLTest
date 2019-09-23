@@ -3,6 +3,7 @@ package com.example.test.view.itemList;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.VisibleForTesting;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
@@ -88,7 +89,8 @@ public class ItemListViewModel extends ViewModel {
      * especifica codigo de error
      * @param response respuesta de la llamada a la API
      */
-    private void onResponseSearchItems(Response<Search> response) {
+    @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
+    protected  void onResponseSearchItems(Response<Search> response) {
         if(response.body() == null || response.body().getResults().size() == 0) {
             errorCode.setValue(NOT_SEARCH_RESULT_ERROR_CODE);
         }
@@ -101,7 +103,8 @@ public class ItemListViewModel extends ViewModel {
      * Si la llamada a la API falló, se establece el codigo de error
      * @param t error de la llamada a la API
      */
-    private void onFailureSearchItems(Throwable t) {
+    @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
+    protected void onFailureSearchItems(Throwable t) {
         errorCode.setValue(SERVER_CONECCTION_ERROR_CODE);
     }
 }
