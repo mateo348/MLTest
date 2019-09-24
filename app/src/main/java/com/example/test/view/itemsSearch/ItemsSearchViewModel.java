@@ -92,12 +92,12 @@ public class ItemsSearchViewModel extends ViewModel {
     protected  void onResponseSearchItems(Response<Search> response) {
         switch (response.code()) {
             case ItemService.SERVER_OK_CODE:
-                if(response.body().getResults().size() > 0){
-                    items.setValue(response.body().getResults());
-                    Log.i(TAG, "onResponseSearchItems: Items Found" );}
-                else{
+                items.setValue(response.body().getResults());
+                if(response.body().getResults().size() == 0){
                     errorCode.setValue(NOT_FOUND_RESULT_ERROR_CODE);
-                    Log.w(TAG, "onResponseSearchItems: Not found results");}
+                    Log.w(TAG, "onResponseSearchItems: Not found items"); }
+                else
+                    Log.i(TAG, "onResponseSearchItems: Items Found" );
                 break;
             case ItemService.SERVER_ERROR_CODE:
                 errorCode.setValue(SERVER_ERROR_CODE);
