@@ -2,7 +2,10 @@ package com.example.test.view.itemsSearch;
 
 import android.util.Log;
 import androidx.annotation.VisibleForTesting;
+import androidx.lifecycle.Lifecycle;
+import androidx.lifecycle.LifecycleObserver;
 import androidx.lifecycle.MutableLiveData;
+import androidx.lifecycle.OnLifecycleEvent;
 import androidx.lifecycle.ViewModel;
 import com.example.test.model.search.Result;
 import com.example.test.model.search.Search;
@@ -13,7 +16,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class ItemsSearchViewModel extends ViewModel {
+public class ItemsSearchViewModel extends ViewModel implements LifecycleObserver {
     private static final String TAG = "ItemsSearchViewModel";
 
     public static final int NOT_INTERNET_ERROR_CODE = 100;
@@ -41,8 +44,14 @@ public class ItemsSearchViewModel extends ViewModel {
     }
 
 
-
-
+    /**
+     * Por si hubo algun error antes de rotar la pantalla , se reinicia el errorCode
+     */
+    @OnLifecycleEvent (Lifecycle.Event.ON_CREATE)
+    public void onCreate()
+    {
+        errorCode.setValue(0);
+    }
 
 
     /**
