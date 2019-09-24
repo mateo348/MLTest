@@ -19,12 +19,11 @@ public class ItemDetailsViewModel extends ViewModel {
     public static final int SERVER_CONECCTION_ERROR_CODE = 200;
     public static final int SERVER_ERROR_CODE = 404;
 
-    ItemService itemService;
-
-    MutableLiveData<Item> selectedItem = new MutableLiveData<>();
-    MutableLiveData<ItemDescription> itemDescription = new MutableLiveData<>();
-    MutableLiveData<Integer> errorCode = new MutableLiveData<>();
+    MutableLiveData<Item> selectedItem;
+    MutableLiveData<ItemDescription> itemDescription ;
+    MutableLiveData<Integer> errorCode;
     Result selectdResult;
+    ItemService itemService;
 
     /**
      * En el constructor se establece el item selecconado
@@ -39,10 +38,19 @@ public class ItemDetailsViewModel extends ViewModel {
     }
 
     public LiveData<Item> getSelectedItem() {
+        if(selectedItem == null)
+            selectedItem = new MutableLiveData<>();
         return selectedItem;
     }
-    public LiveData<Integer> getErrorCode() { return errorCode; }
-    public LiveData<ItemDescription> getItemDescription() { return itemDescription; }
+    public LiveData<Integer> getErrorCode() {
+        if(errorCode == null)
+            errorCode = new MutableLiveData<>();
+        return errorCode; }
+
+    public LiveData<ItemDescription> getItemDescription() {
+        if(itemDescription == null)
+            itemDescription = new MutableLiveData<>();
+        return itemDescription; }
 
     /**
      * Se llama al servicio enviandole el ID del item a buscar y el callback con las actions luego de ejecurarce

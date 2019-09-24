@@ -4,6 +4,7 @@ import android.util.Log;
 import androidx.annotation.VisibleForTesting;
 import androidx.lifecycle.Lifecycle;
 import androidx.lifecycle.LifecycleObserver;
+import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.OnLifecycleEvent;
 import androidx.lifecycle.ViewModel;
@@ -27,15 +28,21 @@ public class ItemsSearchViewModel extends ViewModel implements LifecycleObserver
     /**
      * Lista de resultados de busqueda
      */
-    MutableLiveData<List<Result>> items = new MutableLiveData<>();
+    private MutableLiveData<List<Result>> items = new MutableLiveData<>();
     /**
      * Codigo de error, utilizado en caso de no poder realizar la busqueda o que ésta falle
      */
-    MutableLiveData<Integer> errorCode = new MutableLiveData<>();
+    private MutableLiveData<Integer> errorCode;
 
-    public MutableLiveData<List<Result>> getItems(){ return items; }
+    public LiveData<List<Result>> getItems(){
+        if (items == null)
+            items = new MutableLiveData<>();
+        return items; }
 
-    public MutableLiveData<Integer> getErrorCode() { return errorCode; }
+    public LiveData<Integer> getErrorCode() {
+        if (errorCode == null)
+            errorCode = new MutableLiveData<>();
+        return errorCode; }
 
     ItemService itemService;
 
