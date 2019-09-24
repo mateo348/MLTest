@@ -1,4 +1,4 @@
-package com.example.test.view.itemList;
+package com.example.test.view.itemsSearch;
 
 import android.util.Log;
 
@@ -6,8 +6,8 @@ import androidx.annotation.VisibleForTesting;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-import com.example.test.model.Result;
-import com.example.test.model.Search;
+import com.example.test.model.search.Result;
+import com.example.test.model.search.Search;
 import com.example.test.service.ItemService;
 import com.example.test.util.AppUtils;
 
@@ -16,8 +16,8 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class ItemListViewModel extends ViewModel {
-    private static final String TAG = "ItemListViewModel";
+public class ItemsSearchViewModel extends ViewModel {
+    private static final String TAG = "ItemsSearchViewModel";
 
     public static final int NOT_INTERNET_ERROR_CODE = 100;
     public static final int NOT_FOUND_RESULT_ERROR_CODE = 300;
@@ -39,7 +39,7 @@ public class ItemListViewModel extends ViewModel {
 
     ItemService itemService;
 
-    public ItemListViewModel(ItemService itemService) {
+    public ItemsSearchViewModel(ItemService itemService) {
         this.itemService = itemService;
     }
 

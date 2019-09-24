@@ -6,8 +6,8 @@ import androidx.annotation.VisibleForTesting;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
-import com.example.test.model.Item;
-import com.example.test.model.ItemDescription;
+import com.example.test.model.item.Item;
+import com.example.test.model.item.ItemDescription;
 import com.example.test.service.ItemService;
 
 import retrofit2.Call;
@@ -33,6 +33,7 @@ public class ItemDetailsViewModel extends ViewModel {
      */
     public ItemDetailsViewModel(ItemService itemService, String selectedItemId) {
         this.itemService = itemService;
+
         setSelectedItem(selectedItemId);
         setSelectedItemDescription(selectedItemId);
     }

@@ -1,7 +1,7 @@
 package com.example.test.forTest;
 
-import com.example.test.model.Item;
-import com.example.test.model.ItemDescription;
+import com.example.test.model.item.Item;
+import com.example.test.model.item.ItemDescription;
 import com.example.test.service.ItemService;
 import com.example.test.view.itemDetails.ItemDetailsViewModel;
 import retrofit2.Response;

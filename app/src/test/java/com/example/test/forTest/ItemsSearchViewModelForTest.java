@@ -1,17 +1,17 @@
 package com.example.test.forTest;
 
-import com.example.test.model.Search;
+import com.example.test.model.search.Search;
 import com.example.test.service.ItemService;
-import com.example.test.view.itemList.ItemListViewModel;
+import com.example.test.view.itemsSearch.ItemsSearchViewModel;
 
 import retrofit2.Response;
 
 /**
- * En la necesidad de probar metodos internos, se crea esta extencion de ItemListViewModel
+ * En la necesidad de probar metodos internos, se crea esta extencion de ItemsSearchViewModel
  */
-public class ItemListViewModelForTest extends ItemListViewModel {
+public class ItemsSearchViewModelForTest extends ItemsSearchViewModel {
 
-    public ItemListViewModelForTest(ItemService itemService) {
+    public ItemsSearchViewModelForTest(ItemService itemService) {
         super(itemService);
     }
 

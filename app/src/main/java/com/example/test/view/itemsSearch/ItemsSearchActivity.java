@@ -1,13 +1,15 @@
-package com.example.test.view.itemList;
+package com.example.test.view.itemsSearch;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
 import androidx.recyclerview.widget.DefaultItemAnimator;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.lifecycle.ViewModelProviders;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -15,12 +17,12 @@ import android.widget.ProgressBar;
 import android.widget.SearchView;
 import android.widget.Toast;
 import com.example.test.R;
-import com.example.test.di.ItemsList.DaggerItemsListComponent;
+import com.example.test.di.itemsSearch.DaggerItemsSearchComponent;
+import com.example.test.di.itemsSearch.ItemsSearchComponent;
 import com.example.test.util.AppUtils;
 import com.example.test.view.BaseApplication;
-import com.example.test.di.ItemsList.ItemsListComponent;
-import com.example.test.di.ItemsList.ItemsListScope;
-import com.example.test.model.Result;
+import com.example.test.di.itemsSearch.ItemsSearchScope;
+import com.example.test.model.search.Result;
 
 import java.util.List;
 import javax.inject.Inject;
@@ -28,18 +30,18 @@ import javax.inject.Inject;
 /**
  * Activity que representa la pantalla de busqueda de publicaciones (item)
  */
-@ItemsListScope
-public class ItemListActivity extends AppCompatActivity {
+@ItemsSearchScope
+public class ItemsSearchActivity extends AppCompatActivity {
 
     public static String SELECTED_ITEM_ID_KEY = "selectedItemID";
-    private static final String TAG = "ItemListActivity";
+    private static final String TAG = "ItemsSearchActivity";
 
     @Inject
-    ItemsListViewModelFactory itemsListViewModelFactory;
+    ItemsSearchViewModelFactory itemsSearchViewModelFactory;
     SearchView searchView;
     RecyclerView recyclerView;
-    ItemListViewModel itemListViewModel;
-    ItemListAdapter itemListAdapter;
+    ItemsSearchViewModel itemsSearchViewModel;
+    ItemsSearchAdapter itemsSearchAdapter;
     ProgressBar pbLoading;
 
     @Override
@@ -56,12 +58,12 @@ public class ItemListActivity extends AppCompatActivity {
         /**
          * Se observan los cambios sobre la lista para actualizarla con los resultados encontrados
          */
-        itemListViewModel.getItems().observe(this, new Observer<List<Result>>() {
+        itemsSearchViewModel.getItems().observe(this, new Observer<List<Result>>() {
             @Override
             public void onChanged(List<Result> results) {
-                itemListAdapter.updateList(results);
+                itemsSearchAdapter.updateList(results);
                 if(results.size() > 0)
-                    Log.i(TAG, ItemListActivity.this.getString(R.string.new_results));
+                    Log.i(TAG, ItemsSearchActivity.this.getString(R.string.new_results));
                 onDoneSearchControlsVisibility();
             }
         });
@@ -70,20 +72,20 @@ public class ItemListActivity extends AppCompatActivity {
          *Se observa si hubo cambios sobre el codigo de error en caso de que no se halla realizado la busqueda
          * o hubera fallado, mostrando el mensaje correspondiente
          */
-        itemListViewModel.getErrorCode().observe(this, new Observer<Integer>() {
+        itemsSearchViewModel.getErrorCode().observe(this, new Observer<Integer>() {
             @Override
             public void onChanged(Integer integer) {
                 switch (integer) {
-                    case ItemListViewModel.NOT_INTERNET_ERROR_CODE:
+                    case ItemsSearchViewModel.NOT_INTERNET_ERROR_CODE:
                         notInternetActions();
                         break;
-                    case ItemListViewModel.SERVER_CONECCTION_ERROR_CODE:
+                    case ItemsSearchViewModel.SERVER_CONECCTION_ERROR_CODE:
                         notServerConecctionActions();
                         break;
-                    case ItemListViewModel.NOT_FOUND_RESULT_ERROR_CODE:
+                    case ItemsSearchViewModel.NOT_FOUND_RESULT_ERROR_CODE:
                         notFindSearchResultActions();
                         break;
-                    case ItemListViewModel.SERVER_ERROR_CODE:
+                    case ItemsSearchViewModel.SERVER_ERROR_CODE:
                         onServerErrorActions();
                         break;
                 }
@@ -97,9 +99,9 @@ public class ItemListActivity extends AppCompatActivity {
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
-                if (itemListViewModel.canSearchItems(AppUtils.getInstance())){
+                if (itemsSearchViewModel.canSearchItems(AppUtils.getInstance())){
                     onSearchControlsVisibility();
-                    itemListViewModel.searchItems(query);
+                    itemsSearchViewModel.searchItems(query);
                 } return false;
             }
             @Override
@@ -120,7 +122,7 @@ public class ItemListActivity extends AppCompatActivity {
      * se fuerza el foco sobre la busqueda
      */
     private void setSearchViewFocus() {
-        if(itemListViewModel.getItems().getValue() == null || itemListViewModel.getItems().getValue().size() == 0)
+        if(itemsSearchViewModel.getItems().getValue() == null || itemsSearchViewModel.getItems().getValue().size() == 0)
             searchView.requestFocus();
         else
             searchView.clearFocus();
@@ -135,10 +137,13 @@ public class ItemListActivity extends AppCompatActivity {
         pbLoading = findViewById(R.id.pbLoading);
         searchView = findViewById(R.id.searchView);
         recyclerView = findViewById(R.id.recyclerView);
-        itemListAdapter = new ItemListAdapter(this);
-        recyclerView.setAdapter(itemListAdapter);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        itemListViewModel= ViewModelProviders.of(this, itemsListViewModelFactory).get(ItemListViewModel.class);
+        itemsSearchAdapter = new ItemsSearchAdapter(this);
+        recyclerView.setAdapter(itemsSearchAdapter);
+        if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE)
+            recyclerView.setLayoutManager(new GridLayoutManager(this,2));
+        else
+            recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        itemsSearchViewModel = ViewModelProviders.of(this, itemsSearchViewModelFactory).get(ItemsSearchViewModel.class);
     }
 
     /**
@@ -165,7 +170,7 @@ public class ItemListActivity extends AppCompatActivity {
     }
 
     private void setupDagger() {
-        ItemsListComponent component = DaggerItemsListComponent.builder().baseComponent(BaseApplication.getBaseComponent()).build();
+        ItemsSearchComponent component = DaggerItemsSearchComponent.builder().baseComponent(BaseApplication.getBaseComponent()).build();
         component.inject(this);
     }
 

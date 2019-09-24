@@ -9,13 +9,13 @@ import androidx.viewpager.widget.ViewPager;
 
 import com.example.test.R;
 import com.example.test.databinding.ActivityItemDetailsBinding;
-import com.example.test.model.ItemDescription;
+import com.example.test.model.item.ItemDescription;
 import com.example.test.view.BaseApplication;
 import com.example.test.di.ItemDetails.DaggerItemDetailsComponent;
 import com.example.test.di.ItemDetails.ItemDetailsComponent;
 import com.example.test.di.ItemDetails.ItemDetailsModule;
-import com.example.test.model.Item;
-import com.example.test.view.itemList.ItemListActivity;
+import com.example.test.model.item.Item;
+import com.example.test.view.itemsSearch.ItemsSearchActivity;
 
 import android.os.Bundle;
 import android.util.Log;
@@ -115,7 +115,7 @@ public class ItemDetailsActivity extends AppCompatActivity {
      * Se injectan las instancias con Dagger2 y se pasa como parametro el ID del item seleccionado para buscarlo
      */
     private void setupDagger() {
-        String selectedItemId = getIntent().getExtras().getString(ItemListActivity.SELECTED_ITEM_ID_KEY);
+        String selectedItemId = getIntent().getExtras().getString(ItemsSearchActivity.SELECTED_ITEM_ID_KEY);
 
         ItemDetailsComponent component = DaggerItemDetailsComponent.builder()
                                             .appComponent(BaseApplication.getBaseComponent())

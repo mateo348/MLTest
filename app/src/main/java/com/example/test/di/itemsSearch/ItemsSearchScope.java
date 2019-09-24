@@ -1,13 +1,13 @@
-package com.example.test.di.ItemsList;
+package com.example.test.di.itemsSearch;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import javax.inject.Scope;
 
 /**
- * Definición de scope para la activity ItemsList
+ * Definición de scope para la activity itemsSearch
  */
 @Scope
 @Retention(RetentionPolicy.RUNTIME)
-public @interface ItemsListScope {
+public @interface ItemsSearchScope {
 }

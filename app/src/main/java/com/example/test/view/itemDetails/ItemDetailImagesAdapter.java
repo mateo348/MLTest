@@ -6,8 +6,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import androidx.annotation.NonNull;
 import androidx.viewpager.widget.PagerAdapter;
-import com.example.test.model.Picture;
-import com.example.test.view.itemList.ItemListAdapter;
+import com.example.test.model.item.Picture;
+import com.example.test.view.itemsSearch.ItemsSearchAdapter;
 import com.squareup.picasso.Picasso;
 import java.util.List;
 
@@ -34,6 +34,8 @@ public class ItemDetailImagesAdapter extends PagerAdapter {
     public Object instantiateItem(ViewGroup container, int position) {
         ImageView imageView = new ImageView(mContext);
 
+
+
         //imageView.setScaleType(ImageView.ScaleType.FIT_CENTER);
         Picasso.get()
                 .load(pictures.get(position).getSecureUrl())
@@ -44,7 +46,7 @@ public class ItemDetailImagesAdapter extends PagerAdapter {
     }
 
     /**
-     *A diferencia del metodo de actualizacion de datos usado en {@linkplain ItemListAdapter#updateList(List)}
+     *A diferencia del metodo de actualizacion de datos usado en {@linkplain ItemsSearchAdapter#updateList(List)}
      * aqui no se justifica ya que solo se va a cargar la primera vez
      */
     public void notifyChanges(List<Picture> pictures)

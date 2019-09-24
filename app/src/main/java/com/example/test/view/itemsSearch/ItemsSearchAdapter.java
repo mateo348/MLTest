@@ -1,4 +1,4 @@
-package com.example.test.view.itemList;
+package com.example.test.view.itemsSearch;
 
 import android.content.Context;
 import android.content.Intent;
@@ -12,7 +12,7 @@ import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.RecyclerView;
 import com.example.test.R;
 import com.example.test.databinding.SearchItemBinding;
-import com.example.test.model.Result;
+import com.example.test.model.search.Result;
 import com.example.test.util.DiffUtilCallback;
 import com.example.test.view.itemDetails.ItemDetailsActivity;
 import com.squareup.picasso.Picasso;
@@ -20,13 +20,13 @@ import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ItemListAdapter extends RecyclerView.Adapter<ItemListAdapter.ResultViewHolder> {
+public class ItemsSearchAdapter extends RecyclerView.Adapter<ItemsSearchAdapter.ResultViewHolder> {
 
     List<Result> items = new ArrayList<>();
     Context context;
     final LayoutInflater layoutInflater;
 
-    public ItemListAdapter(Context context) {
+    public ItemsSearchAdapter(Context context) {
         this.context = context;
         layoutInflater = LayoutInflater.from(context);
     }
@@ -95,7 +95,7 @@ public class ItemListAdapter extends RecyclerView.Adapter<ItemListAdapter.Result
             Result result = items.get(getAdapterPosition());
 
             Intent intent = new Intent(context, ItemDetailsActivity.class);
-            intent.putExtra(ItemListActivity.SELECTED_ITEM_ID_KEY, result.getId());
+            intent.putExtra(ItemsSearchActivity.SELECTED_ITEM_ID_KEY, result.getId());
 
             context.startActivity(intent);
 

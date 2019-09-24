@@ -1,8 +1,8 @@
-package com.example.test.model;
+package com.example.test.model.search;
 
+import com.example.test.model.search.Result;
 import com.google.gson.annotations.SerializedName;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 
 

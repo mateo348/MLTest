@@ -2,8 +2,8 @@ package com.example.test;
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule;
 import com.example.test.forTest.ItemDetailsViewModelForTest;
-import com.example.test.model.Item;
-import com.example.test.model.ItemDescription;
+import com.example.test.model.item.Item;
+import com.example.test.model.item.ItemDescription;
 import com.example.test.util.AppUtils;
 import com.example.test.view.itemDetails.ItemDetailsViewModel;
 import org.junit.Assert;

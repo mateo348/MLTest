@@ -5,14 +5,14 @@
     <application
         android:name=".view.BaseApplication"
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@mipmap/meli_icon"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:roundIcon="@mipmap/meli_icon"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
         <activity android:name=".view.itemDetails.ItemDetailsActivity"/>
-        <activity android:name=".view.itemList.ItemListActivity">
+        <activity android:name=".view.itemsSearch.ItemsSearchActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

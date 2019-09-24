@@ -1,5 +1,5 @@
 
-package com.example.test.model;
+package com.example.test.model.item;
 
 import com.google.gson.annotations.SerializedName;
 

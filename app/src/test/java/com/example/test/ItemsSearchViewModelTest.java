@@ -1,11 +1,12 @@
 package com.example.test;
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule;
-import com.example.test.forTest.ItemListViewModelForTest;
-import com.example.test.model.Result;
-import com.example.test.model.Search;
+import com.example.test.forTest.ItemsSearchViewModelForTest;
+import com.example.test.model.search.Result;
+import com.example.test.model.search.Search;
 import com.example.test.util.AppUtils;
-import com.example.test.view.itemList.ItemListViewModel;
+import com.example.test.view.itemsSearch.ItemsSearchViewModel;
+
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Rule;
@@ -23,7 +24,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
-public class ItemServiceImplTest {
+public class ItemsSearchViewModelTest {
 
     private static Retrofit retrofit;
 
@@ -32,7 +33,7 @@ public class ItemServiceImplTest {
             new InstantTaskExecutorRule();
 
     @InjectMocks
-    ItemListViewModelForTest viewModel;
+    ItemsSearchViewModelForTest viewModel;
 
 
     @BeforeClass
@@ -79,7 +80,7 @@ public class ItemServiceImplTest {
 
             viewModel.onResponseSearchItems(response);
             int realValue = viewModel.getErrorCode().getValue();
-            int expectedValue = Integer.valueOf(ItemListViewModel.NOT_FOUND_RESULT_ERROR_CODE);
+            int expectedValue = Integer.valueOf(ItemsSearchViewModel.NOT_FOUND_RESULT_ERROR_CODE);
 
             Assert.assertEquals(expectedValue, realValue);
 
@@ -98,7 +99,7 @@ public class ItemServiceImplTest {
 
         viewModel.onResponseSearchItems(response);
         int realValue = viewModel.getErrorCode().getValue();
-        int expectedValue = Integer.valueOf(ItemListViewModel.SERVER_ERROR_CODE);
+        int expectedValue = Integer.valueOf(ItemsSearchViewModel.SERVER_ERROR_CODE);
 
         Assert.assertEquals(expectedValue, realValue);
     }
@@ -107,7 +108,7 @@ public class ItemServiceImplTest {
     public void onFailureApiServiceTest(){
         viewModel.onFailureApiCall(new Throwable());
         int realValue = viewModel.getErrorCode().getValue();
-        int expectedValue = Integer.valueOf(ItemListViewModel.SERVER_CONECCTION_ERROR_CODE);
+        int expectedValue = Integer.valueOf(ItemsSearchViewModel.SERVER_CONECCTION_ERROR_CODE);
 
         Assert.assertEquals(expectedValue, realValue);
     }
@@ -123,7 +124,7 @@ public class ItemServiceImplTest {
         boolean canSearchItems = viewModel.canSearchItems(appUtils);
 
         int realValue = viewModel.getErrorCode().getValue();
-        int expectedValue = Integer.valueOf(ItemListViewModel.NOT_INTERNET_ERROR_CODE);
+        int expectedValue = Integer.valueOf(ItemsSearchViewModel.NOT_INTERNET_ERROR_CODE);
 
         Assert.assertFalse(canSearchItems);
         Assert.assertEquals(realValue, expectedValue);

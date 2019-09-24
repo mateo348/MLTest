@@ -1,12 +1,10 @@
 package com.example.test.service;
 
 import android.util.Log;
-
 import com.example.test.apiconnection.ApiService;
-import com.example.test.model.Item;
-import com.example.test.model.ItemDescription;
-import com.example.test.model.Search;
-import retrofit2.Call;
+import com.example.test.model.item.Item;
+import com.example.test.model.item.ItemDescription;
+import com.example.test.model.search.Search;
 import retrofit2.Callback;
 
 /**
