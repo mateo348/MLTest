@@ -62,9 +62,7 @@
                 android:id="@+id/linearLayout"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:orientation="vertical"
-
-                >
+                android:orientation="vertical">
 
                     <TextView
                         android:id="@+id/tvTitle"
@@ -74,14 +72,29 @@
                         android:padding="4dp"
                         android:text="@{viewModel.getItemTitle(), default=default_value}" />
 
-                    <TextView
-                        android:id="@+id/tvPrice"
-                        android:theme="@style/TextTitle"
-                        android:layout_width="wrap_content"
+                    <LinearLayout
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:textAlignment="textEnd"
-                        android:padding="4dp"
-                        android:text="@{viewModel.getItemPrice(),default=default_value}" />
+                        android:orientation="horizontal">
+                        <TextView
+                            android:id="@+id/tvPrice"
+                            android:theme="@style/TextTitle"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textAlignment="textStart"
+                            android:padding="4dp"
+                            android:text="@{viewModel.getItemPrice(),default=default_value}" />
+
+                        <TextView
+                                android:id="@+id/tvCondition"
+                                android:theme="@style/TextConditionBig"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="end|center_vertical"
+                                android:textAlignment="textEnd"
+                                android:paddingRight="10dp"
+                                android:text="@{viewModel.getItemCondition(),default=default_value}" />
+                    </LinearLayout>
 
                     <TextView
                         android:padding="4dp"

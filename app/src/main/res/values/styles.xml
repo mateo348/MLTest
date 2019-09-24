@@ -24,6 +24,10 @@
         <item name="android:textSize">12dp</item>
     </style>
 
+    <style name="TextConditionBig" parent="TextCondition">
+        <item name="android:textSize">18dp</item>
+    </style>
+
     <style name="TextSubTitle">
         <item name="android:textSize">@dimen/subtitle_text_size</item>
         <item name="android:fontFamily">@font/lato_bold</item>

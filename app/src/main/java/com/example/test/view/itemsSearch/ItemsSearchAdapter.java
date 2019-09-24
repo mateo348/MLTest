@@ -92,7 +92,8 @@ public class ItemsSearchAdapter extends RecyclerView.Adapter<ItemsSearchAdapter.
             Result result = items.get(getAdapterPosition());
 
             Intent intent = new Intent(context, ItemDetailsActivity.class);
-            intent.putExtra(ItemsSearchActivity.SELECTED_ITEM_ID_KEY, result.getId());
+            //intent.putExtra(ItemsSearchActivity.SELECTED_ITEM_ID_KEY, result.getId());
+            intent.putExtra(ItemsSearchActivity.SELECTED_ITEM_KEY, result);
 
             context.startActivity(intent);
         }

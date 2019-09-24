@@ -1,5 +1,6 @@
 package com.example.test.di.ItemDetails;
 
+import com.example.test.model.search.Result;
 import com.example.test.service.ItemService;
 import com.example.test.view.itemDetails.ItemDetailsViewModelFactory;
 import dagger.Module;
@@ -10,16 +11,16 @@ import dagger.Provides;
  */
 @Module
 public class ItemDetailsModule {
-    String selectedItemId;
+    Result selectdResult;
 
 
-    public ItemDetailsModule(String selectedItemId) {
-        this.selectedItemId = selectedItemId;
+    public ItemDetailsModule(Result selectdResult) {
+        this.selectdResult = selectdResult;
     }
 
     @ItemDetailScope
     @Provides
     ItemDetailsViewModelFactory provideItemDetailsViewModelFactory(ItemService itemService) {
-        return new ItemDetailsViewModelFactory(itemService,selectedItemId);
+        return new ItemDetailsViewModelFactory(itemService, selectdResult);
     }
 }

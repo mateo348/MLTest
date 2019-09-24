@@ -3,13 +3,14 @@ package com.example.test.model.search;
 import com.example.test.util.AppUtils;
 import com.google.gson.annotations.SerializedName;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
  * Dentro de una busqueda {@linkplain Search}, es la cabecera de las publicaciones coindidentes
  * con el criterio de busqueda
  */
-public class Result {
+public class Result implements Serializable {
     @SerializedName("id")
     private String id;
     @SerializedName("title")

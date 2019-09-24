@@ -33,6 +33,7 @@ import javax.inject.Inject;
 public class ItemsSearchActivity extends AppCompatActivity {
 
     public static String SELECTED_ITEM_ID_KEY = "selectedItemID";
+    public static String SELECTED_ITEM_KEY = "selectedItem";
     private static final String TAG = "ItemsSearchActivity";
 
     @Inject

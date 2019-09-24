@@ -9,6 +9,7 @@ import androidx.viewpager.widget.ViewPager;
 import com.example.test.R;
 import com.example.test.databinding.ActivityItemDetailsBinding;
 import com.example.test.model.item.ItemDescription;
+import com.example.test.model.search.Result;
 import com.example.test.view.BaseApplication;
 import com.example.test.di.ItemDetails.DaggerItemDetailsComponent;
 import com.example.test.di.ItemDetails.ItemDetailsComponent;
@@ -53,7 +54,7 @@ public class ItemDetailsActivity extends AppCompatActivity {
             @Override
             public void onChanged(Item item) {
                 Log.i(TAG, ItemDetailsActivity.this.getString(R.string.seted_selected_item));
-                binding.setViewModel(viewModel);
+                binding.invalidateAll();
                 imagesAdapter.notifyChanges(viewModel.getSelectedItem().getValue().getPictures());
                 onDoneSearchControlsVisibility();
             }
@@ -79,6 +80,7 @@ public class ItemDetailsActivity extends AppCompatActivity {
                 switch (integer) {
                     case ItemDetailsViewModel.SERVER_CONECCTION_ERROR_CODE:
                         notServerConecctionActions();
+                        break;
                     case ItemDetailsViewModel.SERVER_ERROR_CODE:
                         onServerErrorActions();
                         break;
@@ -94,6 +96,7 @@ public class ItemDetailsActivity extends AppCompatActivity {
         viewModel = ViewModelProviders.of(this, viewModelFactory).get(ItemDetailsViewModel.class);
         binding = DataBindingUtil.setContentView(this, R.layout.activity_item_details);
         binding.setLifecycleOwner(this);
+        binding.setViewModel(viewModel);
         pbLoading = findViewById(R.id.pbLoading);
         cardView = findViewById(R.id.cardView);
         vpPictures = findViewById(R.id.vpPictures);
@@ -113,11 +116,11 @@ public class ItemDetailsActivity extends AppCompatActivity {
      * Se injectan las instancias con Dagger2 y se pasa como parametro el ID del item seleccionado para buscarlo
      */
     private void setupDagger() {
-        String selectedItemId = getIntent().getExtras().getString(ItemsSearchActivity.SELECTED_ITEM_ID_KEY);
+        Result selectdResult = (Result) getIntent().getExtras().getSerializable(ItemsSearchActivity.SELECTED_ITEM_KEY);
 
         ItemDetailsComponent component = DaggerItemDetailsComponent.builder()
                                             .appComponent(BaseApplication.getBaseComponent())
-                                            .itemDetailsModule(new ItemDetailsModule(selectedItemId))
+                                            .itemDetailsModule(new ItemDetailsModule(selectdResult))
                                             .build();
         component.inject(this);
     }

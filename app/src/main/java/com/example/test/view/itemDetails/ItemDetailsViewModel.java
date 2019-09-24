@@ -7,6 +7,7 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 import com.example.test.model.item.Item;
 import com.example.test.model.item.ItemDescription;
+import com.example.test.model.search.Result;
 import com.example.test.service.ItemService;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -23,17 +24,18 @@ public class ItemDetailsViewModel extends ViewModel {
     MutableLiveData<Item> selectedItem = new MutableLiveData<>();
     MutableLiveData<ItemDescription> itemDescription = new MutableLiveData<>();
     MutableLiveData<Integer> errorCode = new MutableLiveData<>();
+    Result selectdResult;
 
     /**
      * En el constructor se establece el item selecconado
      * @param itemService Servicio que va a llamar a la API para buscar el item seleccionado
-     * @param selectedItemId ID del item seleccionado
+     * @param selectdResult result seleccionado
      */
-    public ItemDetailsViewModel(ItemService itemService, String selectedItemId) {
+    public ItemDetailsViewModel(ItemService itemService, Result selectdResult) {
         this.itemService = itemService;
-
-        setSelectedItem(selectedItemId);
-        setSelectedItemDescription(selectedItemId);
+        this.selectdResult = selectdResult;
+        setSelectedItem(selectdResult.getId());
+        setSelectedItemDescription(selectdResult.getId());
     }
 
     public LiveData<Item> getSelectedItem() {
@@ -127,18 +129,27 @@ public class ItemDetailsViewModel extends ViewModel {
         Log.w(TAG, "onFailureApiCall: ", t.getCause());
     }
 
+    /**
+     * Al moemento de realizar el bindeo no se encuentra seteado selectedItem aun, por eso se obtienen los
+     * datos basicos de selectedResult, luego al actualizar selectedItem, los bindeos se reinician y toman los datos de él
+     * Esto se hace en getItemTitle() y getItemPrice()
+     */
     public String getItemTitle(){
         if (selectedItem.getValue() != null)
             return selectedItem.getValue().getTitle();
         else
-            return "";
+            return selectdResult.getTitle();
     }
 
     public String getItemPrice(){
         if (selectedItem.getValue() != null)
             return selectedItem.getValue().getFormatedPrice();
         else
-            return "";
+            return selectdResult.getFormatedPrice();
+    }
+
+    public String getItemCondition(){
+            return selectdResult.getConditionText();
     }
 
     public String getLongDescription() {
