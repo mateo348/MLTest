@@ -23,7 +23,6 @@ import com.example.test.util.AppUtils;
 import com.example.test.view.BaseApplication;
 import com.example.test.di.itemsSearch.ItemsSearchScope;
 import com.example.test.model.search.Result;
-
 import java.util.List;
 import javax.inject.Inject;
 
@@ -139,10 +138,12 @@ public class ItemsSearchActivity extends AppCompatActivity {
         recyclerView = findViewById(R.id.recyclerView);
         itemsSearchAdapter = new ItemsSearchAdapter(this);
         recyclerView.setAdapter(itemsSearchAdapter);
+
         if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE)
             recyclerView.setLayoutManager(new GridLayoutManager(this,2));
         else
             recyclerView.setLayoutManager(new LinearLayoutManager(this));
+
         itemsSearchViewModel = ViewModelProviders.of(this, itemsSearchViewModelFactory).get(ItemsSearchViewModel.class);
     }
 

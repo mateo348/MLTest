@@ -16,7 +16,6 @@ import com.example.test.model.search.Result;
 import com.example.test.util.DiffUtilCallback;
 import com.example.test.view.itemDetails.ItemDetailsActivity;
 import com.squareup.picasso.Picasso;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -76,8 +75,6 @@ public class ItemsSearchAdapter extends RecyclerView.Adapter<ItemsSearchAdapter.
             binding.getRoot().setOnClickListener(this);
 
             imgThumb = binding.getRoot().findViewById(R.id.imgThumb);
-
-
         }
 
 
@@ -98,9 +95,8 @@ public class ItemsSearchAdapter extends RecyclerView.Adapter<ItemsSearchAdapter.
             intent.putExtra(ItemsSearchActivity.SELECTED_ITEM_ID_KEY, result.getId());
 
             context.startActivity(intent);
-
-
         }
+
     }
 
 }

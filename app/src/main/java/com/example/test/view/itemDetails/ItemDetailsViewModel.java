@@ -1,7 +1,6 @@
 package com.example.test.view.itemDetails;
 
 import android.util.Log;
-
 import androidx.annotation.VisibleForTesting;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
@@ -9,7 +8,6 @@ import androidx.lifecycle.ViewModel;
 import com.example.test.model.item.Item;
 import com.example.test.model.item.ItemDescription;
 import com.example.test.service.ItemService;
-
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;

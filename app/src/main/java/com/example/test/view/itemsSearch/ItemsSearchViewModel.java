@@ -1,16 +1,13 @@
 package com.example.test.view.itemsSearch;
 
 import android.util.Log;
-
 import androidx.annotation.VisibleForTesting;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
-
 import com.example.test.model.search.Result;
 import com.example.test.model.search.Search;
 import com.example.test.service.ItemService;
 import com.example.test.util.AppUtils;
-
 import java.util.List;
 import retrofit2.Call;
 import retrofit2.Callback;

@@ -3,7 +3,6 @@ package com.example.test.service;
 import com.example.test.model.item.Item;
 import com.example.test.model.item.ItemDescription;
 import com.example.test.model.search.Search;
-
 import retrofit2.Callback;
 
 /**

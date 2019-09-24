@@ -1,9 +1,6 @@
 package com.example.test.util;
-
 import androidx.recyclerview.widget.DiffUtil;
-
 import com.example.test.model.search.Result;
-
 import java.util.List;
 
 /**

@@ -6,7 +6,6 @@ import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.viewpager.widget.ViewPager;
-
 import com.example.test.R;
 import com.example.test.databinding.ActivityItemDetailsBinding;
 import com.example.test.model.item.ItemDescription;
@@ -16,7 +15,6 @@ import com.example.test.di.ItemDetails.ItemDetailsComponent;
 import com.example.test.di.ItemDetails.ItemDetailsModule;
 import com.example.test.model.item.Item;
 import com.example.test.view.itemsSearch.ItemsSearchActivity;
-
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;

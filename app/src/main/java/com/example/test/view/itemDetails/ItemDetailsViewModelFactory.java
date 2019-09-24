@@ -3,7 +3,6 @@ package com.example.test.view.itemDetails;
 import androidx.annotation.NonNull;
 import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
-
 import com.example.test.service.ItemService;
 
 public class ItemDetailsViewModelFactory implements ViewModelProvider.Factory {

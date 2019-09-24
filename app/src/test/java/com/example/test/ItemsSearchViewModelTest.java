@@ -6,7 +6,6 @@ import com.example.test.model.search.Result;
 import com.example.test.model.search.Search;
 import com.example.test.util.AppUtils;
 import com.example.test.view.itemsSearch.ItemsSearchViewModel;
-
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Rule;
