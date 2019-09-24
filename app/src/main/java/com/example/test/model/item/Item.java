@@ -13,24 +13,18 @@ public class Item {
 
     final static String ID = "id";
     final static String TITLE = "title";
-    final static String SUBTITLE = "subtitle";
     final static String PRICE = "price";
-    final static String CATEGORY_ID = "category_id";
     final static String PICTURES = "pictures";
     final static String CURRENCY_ID = "currency_id";
     final static String ORIGINAL_PRICE = "original_price";
 
-    public static String ATTRIBUTES = String.format("{%1$s,%2$s,%3$s,%4$s,%5$s,%6$s,%7$s}", ID,TITLE,PRICE,CATEGORY_ID,PICTURES,CURRENCY_ID,ORIGINAL_PRICE);
+    public static String ATTRIBUTES = String.format("{%1$s,%2$s,%3$s,%4$s,%5$s,%6$s}", ID,TITLE,PRICE,PICTURES,CURRENCY_ID,ORIGINAL_PRICE);
 
 
     @SerializedName(ID)
     private String id;
     @SerializedName(TITLE)
     private String title;
-    @SerializedName(SUBTITLE)
-    private String subtitle;
-    @SerializedName(CATEGORY_ID)
-    private String category_id;
     @SerializedName(PRICE)
     private Double price;
     @SerializedName(PICTURES)
@@ -39,60 +33,15 @@ public class Item {
     private String currencyId;
 
 
-
-
-
     public String getTitle() {
         return title;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public String getSubtitle() {
-        return subtitle;
-    }
-
-    public void setSubtitle(String subtitle) {
-        this.subtitle = subtitle;
-    }
-
-
-
-    public String getCategory_id() {
-        return category_id;
-    }
-
-    public void setCategory_id(String category_id) {
-        this.category_id = category_id;
-    }
-
     public String getFormatedPrice() {
         return AppUtils.getInstance().getCurrencySymbol(currencyId)+ AppUtils.getInstance().formatPrice(price.intValue()); }
-    public Double getPrice() {
-        return price;
-    }
-
-    public void setPrice(double price) {
-        this.price = price;
-    }
 
     public List<Picture> getPictures() {
         return pictures;
     }
 
-    public void setPictures(List<Picture> pictures) {
-        this.pictures = pictures;
-    }
-
-
-
-    public String getCurrencyId() {
-        return currencyId;
-    }
-
-    public void setCurrencyId(String currencyId) {
-        this.currencyId = currencyId;
-    }
 }
