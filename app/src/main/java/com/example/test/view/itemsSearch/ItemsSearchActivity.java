@@ -147,8 +147,6 @@ public class ItemsSearchActivity extends AppCompatActivity {
             recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         itemsSearchViewModel = ViewModelProviders.of(this, itemsSearchViewModelFactory).get(ItemsSearchViewModel.class);
-
-        getLifecycle().addObserver(itemsSearchViewModel);
     }
 
     /**
