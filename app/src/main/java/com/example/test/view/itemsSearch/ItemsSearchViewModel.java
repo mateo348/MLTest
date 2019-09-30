@@ -12,12 +12,14 @@ import com.example.test.model.search.Result;
 import com.example.test.model.search.Search;
 import com.example.test.service.ItemService;
 import com.example.test.util.AppUtils;
+import com.example.test.util.SingleLiveEvent;
+
 import java.util.List;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class ItemsSearchViewModel extends ViewModel implements LifecycleObserver {
+public class ItemsSearchViewModel extends ViewModel {
     private static final String TAG = "ItemsSearchViewModel";
 
     public static final int NOT_INTERNET_ERROR_CODE = 100;
@@ -28,11 +30,11 @@ public class ItemsSearchViewModel extends ViewModel implements LifecycleObserver
     /**
      * Lista de resultados de busqueda
      */
-    private MutableLiveData<List<Result>> items = new MutableLiveData<>();
+    private MutableLiveData<List<Result>> items;
     /**
      * Codigo de error, utilizado en caso de no poder realizar la busqueda o que ésta falle
      */
-    private MutableLiveData<Integer> errorCode;
+    private SingleLiveEvent<Integer> errorCode;
 
     public LiveData<List<Result>> getItems(){
         if (items == null)
@@ -41,23 +43,13 @@ public class ItemsSearchViewModel extends ViewModel implements LifecycleObserver
 
     public LiveData<Integer> getErrorCode() {
         if (errorCode == null)
-            errorCode = new MutableLiveData<>();
+            errorCode = new SingleLiveEvent<>();
         return errorCode; }
 
     ItemService itemService;
 
     public ItemsSearchViewModel(ItemService itemService) {
         this.itemService = itemService;
-    }
-
-
-    /**
-     * Por si hubo algun error antes de rotar la pantalla , se reinicia el errorCode
-     */
-    @OnLifecycleEvent (Lifecycle.Event.ON_CREATE)
-    public void onCreate()
-    {
-        errorCode.setValue(0);
     }
 
 
